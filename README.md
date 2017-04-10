@@ -1,5 +1,5 @@
 # Project 3: LCD Game
-## Introduction
+## Introduction!
 
 Continuing your effort to help ACME Solutions provide Christmas toys, 
 your task is now to develop a game for the LCD screen.  You should 
