@@ -95,7 +95,7 @@ Layer layer1 = {		/**< Layer with a red square */
 };
 
 Layer layer0 = {		/**< Layer with an orange circle */
-  (AbShape *)&rectangelPanel,
+  (AbShape *)&rectanglePanel,
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_ORANGE,

@@ -15,7 +15,7 @@
 #include <abCircle.h>
 
 #define GREEN_LED BIT6
-
+#define WIDTH 2;
 
 AbRect rect10 = {abRectGetBounds, abRectCheck, {10,10}}; /**< 10x10 rectangle */
 AbRArrow rightArrow = {abRArrowGetBounds, abRArrowCheck, 30};
@@ -39,7 +39,7 @@ AbRect slicedRectangle = {
 };
 
 AbRect rectanglePanel = {
-        abRectGetBounds, abRectCheck, {REC_WIDTH,REC_LENGTH}
+        abRectGetBounds, abRectCheck, {WIDTH,LENGTH}
 };
 
 AbRect rectangleLine = {
