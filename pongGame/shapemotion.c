@@ -62,7 +62,7 @@ Layer middleDiv = {
         0
 };
 
-Layer ballLayer = {		/** Layer with a violet ball */
+Layer BallLayer = {		/** Layer with a violet Ball */
   (AbShape *) &circle8,
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
@@ -76,7 +76,7 @@ Layer fieldLayer = {		/* playing field as a layer */
   {screenWidth/2, screenHeight/2},/**< center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &ballLayer
+  &BallLayer
 };
 
 Layer leftPad = {		/**< Layer with left pad */
@@ -105,7 +105,7 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml3 = { &ballLayer, {-1,2}, 0 };
+MovLayer ml3 = { &BallLayer, {-1,2}, 0 };
 MovLayer ml1 = { &leftPad, {0,1}, &ml3 };
 MovLayer ml0 = { &rightPad, {0,1}, &ml1 };
 
@@ -155,14 +155,14 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
  *  \param ml The moving shape to be advanced
  *  \param fence The region which will serve as a boundary for ml
  */
-void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *ballLayer, MovLayer *ml, Region *fence )
+void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *BallLayer, MovLayer *ml, Region *fence )
 {
   int radius = (WIDTH/2);
   Vec2 newPos;
   u_char axis;
   Layer *Pad1 = rightPad;
   Layer *Pad2 = leftPad;
-  Layer *Ball = ballLayer;
+  Layer *Ball = BallLayer;
 
   Region shapeBoundary;
   for (; ml; ml = ml->next) {
@@ -183,12 +183,12 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *ballLayer, MovLay
         int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
         newPos.axes[axis] += (2 * velocity);
 
-      }else if(  (ball->pos.axes[0]- radius <= leftPad->pos.axes[0] + WIDTH) &&
-                 (ball->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
-                 (ball->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
-                 (ball->pos.axes[0]+ radius >= rightPad->pos.axes[0] -WIDTH) &&
-                 (ball->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
-                 (ball->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH)
+      }else if(  (Ball->pos.axes[0]- radius <= leftPad->pos.axes[0] + WIDTH) &&
+                 (Ball->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
+                 (Ball->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
+                 (Ball->pos.axes[0]+ radius >= rightPad->pos.axes[0] -WIDTH) &&
+                 (Ball->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
+                 (Ball->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH)
         /*    ||
         //for easy game uncomment
         (ship->pos.axes[0]-radius <= leftPad->pos.axes[0] + WIDTH) &&
@@ -296,7 +296,7 @@ void wdt_c_handler()
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
   if (count == 15) {
-    detectCollisions(&rightPad, &leftPad, &ballLayer, &ml0, &fieldFence);
+    detectCollisions(&rightPad, &leftPad, &BallLayer, &ml0, &fieldFence);
     if (p2sw_read())
       redrawScreen = 1;
     count = 0;
