@@ -52,10 +52,10 @@ AbRectOutline fieldOutline = {	/* playing field */
 };
 
 Layer layer4 = {
-        //blue division rectangle
+        //middle line division
         (AbShape *)&rectangleLine,
         //bit below & right of center
-        {(screenWidth/2)+2, (screenHeight/2)+2},
+        {(screenWidth/2), (screenHeight/2)},
         //last & next pos
         {0,0}, {0,0},
         COLOR_WHITE,
