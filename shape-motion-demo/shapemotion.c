@@ -5,7 +5,8 @@
  *  While the CPU is running the green LED is on, and
  *  when the screen does not need to be redrawn the CPU
  *  is turned off along with the green LED.
- */  
+ */
+#include <stdio.h>
 #include <msp430.h>
 #include <libTimer.h>
 #include <lcdutils.h>
