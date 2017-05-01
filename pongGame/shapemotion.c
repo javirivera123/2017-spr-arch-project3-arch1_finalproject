@@ -20,7 +20,7 @@
 #define LENGTH 10
 static int increment;
 
-int abSlicedRectChec(const AbRect *rect, const Vec2 *centerPos, const Vec2 *pixel){
+int abSlicedRectCheck(const AbRect *rect, const Vec2 *centerPos, const Vec2 *pixel){
   Vec2 relPos;
   //vector from cener of pixel
   vec2Sub(&relPos, pixel, centerPos);
