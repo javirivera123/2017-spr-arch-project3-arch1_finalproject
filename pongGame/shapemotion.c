@@ -244,10 +244,12 @@ void main() {
 
 
   //definitions for score
-  char score[3];
+  char score1[3];
+  char score2[3]
   int j;
   for (j = 0; j < 3; j++)
-    score[j] = '0';
+    score1[j] = '0';
+    score2[j] = '0';
 
 
 
@@ -260,10 +262,14 @@ void main() {
     redrawScreen = 0;
     movLayerDraw(&ml0, &rightPad);
 
-    score[3] = 0;
+    score1[3] = 0;
+    score2[3] = 0;
+
+    drawString5x7(20, 15, score, COLOR_RED, COLOR_BLACK);
+    drawString5x7(10, 5, "P1 SCORE: ", COLOR_GOLD, COLOR_BLACK);
 
     drawString5x7(90, 15, score, COLOR_RED, COLOR_BLACK);
-    drawString5x7(45, 5, "YOUR SCORE: ", COLOR_GOLD, COLOR_BLACK);
+    drawString5x7(45, 5, "P2 SCORE: ", COLOR_GOLD, COLOR_BLACK);
 
     if ( onesPlace<9 && increment == 1 ) {
       increment = 0;
@@ -302,4 +308,23 @@ void wdt_c_handler()
     count = 0;
   } 
   P1OUT &= ~GREEN_LED;		    /**< Green LED off when cpu off */
+}
+
+void buttonSense(int j, MovLayer *left, MovLayer *right){
+  int b1=0;
+  int b2=0;
+  int b3=0;
+  int b4=0;
+
+  Vec2 lPadUpdate
+  Vec2 rPadUpdate;
+
+  vec2Add(&lPadUpdate, &left->layer->posNext, &left->velocity);
+  vec2Add(&rPadUpdate, &right->layer->posNext, &right->velocity);
+
+  int velo
+
+
+
+
 }
