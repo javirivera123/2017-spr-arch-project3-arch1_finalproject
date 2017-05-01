@@ -36,9 +36,6 @@ int abSlicedRectCheck(const AbRect *rect, const Vec2 *centerPos, const Vec2 *pix
   }
 }
 
-AbRect slicedRectangle = {
-        abRectGetBounds, abSlicedRectCheck, {10,5}
-};
 
 AbRect rectanglePanel = {
         abRectGetBounds, abRectCheck, {WIDTH, LENGTH}
@@ -47,12 +44,6 @@ AbRect rectanglePanel = {
 AbRect rectangleLine = {
         abRectGetBounds, abSlicedRectCheck, {5,70}
 };
-
-AbRect square = {
-        abRectGetBounds, abRectCheck, {3,3}
-};
-
-
 
 
 AbRectOutline fieldOutline = {	/* playing field */
@@ -114,9 +105,9 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml3 = { &layer3, {1,1}, 0 }; /**< not all layers move */
-MovLayer ml1 = { &layer1, {1,2}, &ml3 }; 
-MovLayer ml0 = { &layer0, {2,1}, &ml1 }; 
+MovLayer ml3 = { &layer3, {-1,2}, 0 }; /**< not all layers move */
+MovLayer ml1 = { &layer1, {0,1}, &ml3 };
+MovLayer ml0 = { &layer0, {0,1}, &ml1 };
 
 void movLayerDraw(MovLayer *movLayers, Layer *layers)
 {
