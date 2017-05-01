@@ -273,7 +273,7 @@ void wdt_c_handler()
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
   if (count == 15) {
-    mlAdvance(&ml0, &fieldFence);
+    detectCollisions(&ml0, &fieldFence);
     if (p2sw_read())
       redrawScreen = 1;
     count = 0;
