@@ -15,7 +15,6 @@
 #include <shape.h>
 #include <abCircle.h>
 
-#define
 #define GREEN_LED BIT6
 
 
