@@ -171,8 +171,40 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *ballLayer, MovLay
     for (axis = 0; axis < 2; axis ++) {
       if ((shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]) ||
 	  (shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]) ) {
-	int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-	newPos.axes[axis] += (2*velocity);
+
+        clearScreen(COLOR_STEEL_BLUE);
+        drawString5x7(20, 60, "you lost", COLOR_GREEN, COLOR_BLACK);
+
+        or_sr(0x10);
+        P1OUT &= ~GREEN_LED;
+      }else if((shapeBoundary.topLeft.axes[1] < fence->topLeft.axes[1]) ||
+               (shapeBoundary.botRight.axes[1] > fence->botRight.axes[1]) ) {
+
+        int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+        newPos.axes[axis] += (2 * velocity);
+
+      }else if(  (ball->pos.axes[0]-recRadius <= leftPad->pos.axes[0] + WIDTH) &&
+                 (ball->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
+                 (ball->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
+                 (ball->pos.axes[0]+recRadius >= rightPad->pos.axes[0] -WIDTH) &&
+                 (ball->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
+                 (ball->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH)
+        /*    ||
+        //for easy game uncomment
+        (ship->pos.axes[0]-recRadius <= leftPad->pos.axes[0] + WIDTH) &&
+        (ship->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
+        (ship->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
+        (ship->pos.axes[0]+recRadius >= rightPad->pos.axes[0] WIDTH) &&
+        (ship->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
+        (ship->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH) */){
+
+        //set flag to give points
+        increment = 1;
+        //change velocity and direction
+        int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+        newPos.axes[axis] += (8*velocity);
+
+
       }	/**< if outside of fence */
     } /**< for axis */
     ml->layer->posNext = newPos;
