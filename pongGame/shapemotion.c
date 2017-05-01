@@ -38,7 +38,7 @@ AbRect slicedRectangle = {
 };
 
 AbRect rectanglePanel = {
-        abRectGetBounds, abRectCheck, {REC_WIDTH,REC_LENGTH}
+        abRectGetBounds, abRectCheck, {WIDTH, LENGTH}
 };
 
 AbRect rectangleLine = {
