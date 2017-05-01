@@ -86,7 +86,7 @@ Layer fieldLayer = {		/* playing field as a layer */
 };
 
 Layer layer1 = {		/**< Layer with a red square */
-  (AbShape *)&rectanglePanel
+  (AbShape *)&rectanglePanel,
   {(screenWidth/2)-49, (screenHeight/2)+8}, /**< center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
