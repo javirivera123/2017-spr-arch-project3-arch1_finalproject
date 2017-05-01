@@ -19,6 +19,9 @@
 #define WIDTH 2
 #define LENGTH 10
 static int increment;
+static int onesPlace = 0;
+static int tensPlace = 0;
+static int hundredsPlace = 0;
 
 int abSlicedRectCheck(const AbRect *rect, const Vec2 *centerPos, const Vec2 *pixel){
   Vec2 relPos;
@@ -161,17 +164,22 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
  *  \param ml The moving shape to be advanced
  *  \param fence The region which will serve as a boundary for ml
  */
-void mlAdvance(MovLayer *ml, Region *fence)
+void detectCollisions(MovLayer *ml, Region *fence, Layer *layer0, Layer *layer1, Layer *layer3 Layer *layer4 )
 {
+  int radius = (WIDTH/2);
   Vec2 newPos;
   u_char axis;
+  Layer *Pad1 = layer0;
+  Layer *Pad2 = layer3;
+  Layer *Ball = layer4;
+
   Region shapeBoundary;
   for (; ml; ml = ml->next) {
     vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
     abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
     for (axis = 0; axis < 2; axis ++) {
-      if ((shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]) ||
-	  (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) ) {
+      if ((shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]) ||
+	  (shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]) ) {
 	int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
 	newPos.axes[axis] += (2*velocity);
       }	/**< if outside of fence */
@@ -218,6 +226,8 @@ void main() {
   for (j = 0; j < 3; j++)
     score[j] = '0';
 
+
+
   for (;;) {
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
       P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
@@ -229,8 +239,30 @@ void main() {
 
     score[3] = 0;
 
-    drawString5x7(90, 15, score, COLOR_BEIGE, COLOR_BLACK);
+    drawString5x7(90, 15, score, COLOR_RED, COLOR_BLACK);
     drawString5x7(45, 5, "YOUR SCORE: ", COLOR_GOLD, COLOR_BLACK);
+
+    if ( onesPlace<9 && increment == 1 ) {
+      increment = 0;
+      onesPlace++;
+      score[2] = onesPlace;
+
+    }else if(increment == 1 && onesPlace == 9 && tensPlace < 9) {
+      increment = 0;
+      onesPlace = 0;
+      tensPlace++;
+      score[2] = onesPlace;
+      score[1] = tensPlace;
+
+    }else if( onesPlace == 9 && tensPlace == 9 && hundredsPlace < 9 && increment == 1) {
+      increment = 0;
+      onesPlace = 0;
+      tensPlace = 0;
+      hundredsPlace++;
+      score[2] = onesPlace;
+      score[1] = tensPlace;
+      score[0] = hundredsPlace;
+    }
   }
 
  }
