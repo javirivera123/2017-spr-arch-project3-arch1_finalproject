@@ -26,6 +26,6 @@ void main()
     for (i = 0; i < 4; i++)
       str[i] = (switches & (1<<i)) ? '-' : '0'+i;
     str[4] = 0;
-    drawString5x7(20,20, str, COLOR_GREEN, COLOR_BLUE);
+    drawString5x7(40,40, str, COLOR_GREEN, COLOR_BLUE);
   } 
 }
