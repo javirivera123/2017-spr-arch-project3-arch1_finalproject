@@ -164,7 +164,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
  *  \param ml The moving shape to be advanced
  *  \param fence The region which will serve as a boundary for ml
  */
-void detectCollisions(MovLayer *ml, Region *fence, Layer *layer0, Layer *layer1, Layer *layer3 Layer *layer4 )
+void detectCollisions(MovLayer *ml, Region *fence, Layer *layer0, Layer *layer1, Layer *layer3, Layer *layer4 )
 {
   int radius = (WIDTH/2);
   Vec2 newPos;
