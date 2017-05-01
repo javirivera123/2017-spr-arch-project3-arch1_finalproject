@@ -15,8 +15,8 @@
 #include <abCircle.h>
 
 #define GREEN_LED BIT6
-#define WIDTH 2;
-#define LENGTH 10;
+#define WIDTH 2
+#define LENGTH 10
 
 AbRect rect10 = {abRectGetBounds, abRectCheck, {10,10}}; /**< 10x10 rectangle */
 AbRArrow rightArrow = {abRArrowGetBounds, abRArrowCheck, 30};
