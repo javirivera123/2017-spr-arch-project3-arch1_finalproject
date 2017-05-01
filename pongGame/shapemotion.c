@@ -79,7 +79,7 @@ Layer fieldLayer = {		/* playing field as a layer */
   &layer3
 };
 
-Layer layer1 = {		/**< Layer with a red square */
+Layer layer1 = {		/**< Layer with left pad */
   (AbShape *)&rectanglePanel,
   {(screenWidth/2)-49, (screenHeight/2)+8}, /**< center */
   {0,0}, {0,0},				    /* last & next pos */
@@ -87,9 +87,9 @@ Layer layer1 = {		/**< Layer with a red square */
   &fieldLayer,
 };
 
-Layer layer0 = {		/**< Layer with an orange circle */
+Layer layer0 = {		/**< Layer with right pad */
   (AbShape *)&rectanglePanel,
-  {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
+  {(screenWidth/2)+50, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
   &layer1,
