@@ -162,8 +162,8 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *ballLayer,
   Vec2 newPos;
   u_char axis;
   Layer *Pad1 = rightPad;
-  Layer *Pad2 = ballLayer;
-  Layer *Ball = middleDiv;
+  Layer *Pad2 = leftPad;
+  Layer *Ball = ballLayer;
 
   Region shapeBoundary;
   for (; ml; ml = ml->next) {
