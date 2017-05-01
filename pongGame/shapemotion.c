@@ -188,7 +188,8 @@ void main() {
     P1OUT |= GREEN_LED;       /**< Green led on when CPU on */
     redrawScreen = 0;
     movLayerDraw(&ml0, &layer0);
-    core[3] = 0;
+
+    score[3] = 0;
 
     drawString5x7(90, 15, score, COLOR_BEIGE, COLOR_BLACK);
     drawString5x7(45, 5, "YOUR SCORE: ", COLOR_GOLD, COLOR_BLACK);
