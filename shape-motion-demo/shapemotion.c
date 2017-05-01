@@ -20,6 +20,20 @@
 AbRect rect10 = {abRectGetBounds, abRectCheck, {10,10}}; /**< 10x10 rectangle */
 AbRArrow rightArrow = {abRArrowGetBounds, abRArrowCheck, 30};
 
+int abSlicedRectCheck(const AbRect *rect, const Vec2 *centerPos, const Vec2 *pixel){
+  Vec2 relPos;
+  //vector from cener of pixel
+  vec2Sub(&relPos, pixel, centerPos);
+  //reject pixels in specified sclice
+  if( relPos.axes[0] == 0 && relPos.axes[0]/2 == relPos.axes[0] &&
+      relPos.axes[1]/2 != relPos.axes[1]){
+    return 0;
+  }else{
+    return abRectCheck(rect,centerPos,pixel);
+  }
+}
+
+
 AbRect slicedRectangle = {
         abRectGetBounds, abSlicedRectCheck, {10,5}
 };
