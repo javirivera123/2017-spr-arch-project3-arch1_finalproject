@@ -152,9 +152,8 @@ Region fieldFence;		/**< fence around playing field  */
 /** Initializes everything, enables interrupts and green LED, 
  *  and handles the rendering for the screen
  */
-void main()
-{
-  P1DIR |= GREEN_LED;		/**< Green led on when CPU on */		
+void main() {
+  P1DIR |= GREEN_LED;        /**< Green led on when CPU on */
   P1OUT |= GREEN_LED;
 
   configureClocks();
@@ -172,35 +171,30 @@ void main()
 
 
   enableWDTInterrupts();      /**< enable periodic interrupt */
-  or_sr(0x8);	              /**< GIE (enable interrupts) */
+  or_sr(0x8);                  /**< GIE (enable interrupts) */
 
 
   //definitions for score
   char score[3];
   int j;
-  for(j=0;j<3;j++)
+  for (j = 0; j < 3; j++)
     score[j] = '0';
 
-  for(;;) { 
+  for (;;) {
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
       P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
-      or_sr(0x10);	      /**< CPU OFF */
+      or_sr(0x10);          /**< CPU OFF */
     }
     P1OUT |= GREEN_LED;       /**< Green led on when CPU on */
     redrawScreen = 0;
     movLayerDraw(&ml0, &layer0);
+    core[3] = 0;
+
+    drawString5x7(90, 15, score, COLOR_BEIGE, COLOR_BLACK);
+    drawString5x7(45, 5, "YOUR SCORE: ", COLOR_GOLD, COLOR_BLACK);
   }
-}
 
-for(;;){
-
-
-}
-
-score[3] = 0;
-drawString5x7( 90, 15, score, COLOR_BEIGE, COLOR_BLACK);
-drawString5x7( 45, 5, "YOUR SCORE: ", COLOR_GOLD, COLOR_BLACK);
-
+ }
 /** Watchdog timer interrupt handler. 15 interrupts/sec */
 void wdt_c_handler()
 {
