@@ -156,7 +156,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
  *  \param fence The region which will serve as a boundary for ml
  */
 void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *ballLayer,
-                       MovLayer *ml, Region *fence, )
+                       MovLayer *ml, Region *fence )
 {
   int radius = (WIDTH/2);
   Vec2 newPos;
