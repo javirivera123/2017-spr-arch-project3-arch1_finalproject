@@ -105,7 +105,7 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml3 = { &ballLayer, {-1,2}, 0 }; /**< not all layers move */
+MovLayer ml3 = { &ballLayer, {-1,2}, 0 };
 MovLayer ml1 = { &leftPad, {0,1}, &ml3 };
 MovLayer ml0 = { &rightPad, {0,1}, &ml1 };
 
@@ -155,7 +155,8 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
  *  \param ml The moving shape to be advanced
  *  \param fence The region which will serve as a boundary for ml
  */
-void detectCollisions(MovLayer *ml, Region *fence, Layer *rightPad, Layer *leftPad, Layer *ballLayer, Layer *middleDiv )
+void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *ballLayer,
+                       MovLayer *ml, Region *fence, )
 {
   int radius = (WIDTH/2);
   Vec2 newPos;
@@ -264,7 +265,7 @@ void wdt_c_handler()
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
   if (count == 15) {
-    detectCollisions(&rightPad, &leftPad, &ballLayer, &middleDiv, &ml0, &fieldFence);
+    detectCollisions(&rightPad, &leftPad, &ballLayer &ml0, &fieldFence);
     if (p2sw_read())
       redrawScreen = 1;
     count = 0;
