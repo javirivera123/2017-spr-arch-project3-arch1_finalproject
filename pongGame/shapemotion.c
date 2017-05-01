@@ -51,7 +51,7 @@ AbRectOutline fieldOutline = {	/* playing field */
   {screenWidth/2 - 4, screenHeight/2 - 4}
 };
 
-Layer layer4 = {
+Layer middleDiv = {
         //middle line division
         (AbShape *)&rectangleLine,
         //bit below & right of center
@@ -62,12 +62,12 @@ Layer layer4 = {
         0
 };
 
-Layer layer3 = {		/**< Layer with an orange circle */
-  (AbShape *)&circle8,
+Layer ballLayer = {		/** Layer with a violet ball */
+  (AbShape *) &circle8,
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_VIOLET,
-  &layer4,
+  &middleDiv,
 };
 
 
@@ -76,23 +76,23 @@ Layer fieldLayer = {		/* playing field as a layer */
   {screenWidth/2, screenHeight/2},/**< center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &layer3
+  &ballLayer
 };
 
-Layer layer1 = {		/**< Layer with left pad */
+Layer leftPad = {		/**< Layer with left pad */
   (AbShape *)&rectanglePanel,
-  {(screenWidth/2)-49, (screenHeight/2)+8}, /**< center */
+  {(screenWidth/2)-49, (screenHeight/2)+8}, /**< left */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
   &fieldLayer,
 };
 
-Layer layer0 = {		/**< Layer with right pad */
+Layer rightPad = {		/**< Layer with right pad */
   (AbShape *)&rectanglePanel,
-  {(screenWidth/2)+50, (screenHeight/2)+5}, /**< bit below & right of center */
+  {(screenWidth/2)+50, (screenHeight/2)+5}, /**< right */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &layer1,
+  &leftPad,
 };
 
 /** Moving Layer
@@ -105,9 +105,9 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml3 = { &layer3, {-1,2}, 0 }; /**< not all layers move */
-MovLayer ml1 = { &layer1, {0,1}, &ml3 };
-MovLayer ml0 = { &layer0, {0,1}, &ml1 };
+MovLayer ml3 = { &ballLayer, {-1,2}, 0 }; /**< not all layers move */
+MovLayer ml1 = { &leftPad, {0,1}, &ml3 };
+MovLayer ml0 = { &rightPad, {0,1}, &ml1 };
 
 void movLayerDraw(MovLayer *movLayers, Layer *layers)
 {
@@ -155,14 +155,14 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
  *  \param ml The moving shape to be advanced
  *  \param fence The region which will serve as a boundary for ml
  */
-void detectCollisions(MovLayer *ml, Region *fence, Layer *layer0, Layer *layer1, Layer *layer3, Layer *layer4 )
+void detectCollisions(MovLayer *ml, Region *fence, Layer *rightPad, Layer *leftPad, Layer *ballLayer, Layer *middleDiv )
 {
   int radius = (WIDTH/2);
   Vec2 newPos;
   u_char axis;
-  Layer *Pad1 = layer0;
-  Layer *Pad2 = layer3;
-  Layer *Ball = layer4;
+  Layer *Pad1 = rightPad;
+  Layer *Pad2 = ballLayer;
+  Layer *Ball = middleDiv;
 
   Region shapeBoundary;
   for (; ml; ml = ml->next) {
@@ -200,8 +200,8 @@ void main() {
 
   shapeInit();
 
-  layerInit(&layer0);
-  layerDraw(&layer0);
+  layerInit(&rightPad);
+  layerDraw(&rightPad);
 
 
   layerGetBounds(&fieldLayer, &fieldFence);
@@ -226,7 +226,7 @@ void main() {
     }
     P1OUT |= GREEN_LED;       /**< Green led on when CPU on */
     redrawScreen = 0;
-    movLayerDraw(&ml0, &layer0);
+    movLayerDraw(&ml0, &rightPad);
 
     score[3] = 0;
 
@@ -264,7 +264,7 @@ void wdt_c_handler()
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
   if (count == 15) {
-    detectCollisions(&layer0, &layer1, &layer3, &layer4, &ml0, &fieldFence);
+    detectCollisions(&rightPad, &leftPad, &ballLayer, &middleDiv, &ml0, &fieldFence);
     if (p2sw_read())
       redrawScreen = 1;
     count = 0;
