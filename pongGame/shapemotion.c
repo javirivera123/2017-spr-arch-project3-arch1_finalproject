@@ -50,12 +50,11 @@ AbRect square = {
 };
 
 
-AbRect rect10 = {abRectGetBounds, abRectCheck, {10,10}}; /**< 10x10 rectangle */
-AbRArrow rightArrow = {abRArrowGetBounds, abRArrowCheck, 30};
+
 
 AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,   
-  {screenWidth/2 - 7, screenHeight/2 - 7}
+  {screenWidth/2 - 4, screenHeight/2 - 4}
 };
 
 Layer layer4 = {
