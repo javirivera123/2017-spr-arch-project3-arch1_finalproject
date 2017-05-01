@@ -16,7 +16,38 @@
 #include <abCircle.h>
 
 #define GREEN_LED BIT6
+#define WIDTH 2
+#define LENGTH 10
+static int increment;
 
+int abSlicedRectCheck(const AbRect *rect, const Vec2 *centerPos, const Vec2 *pixel){
+  Vec2 relPos;
+  //vector from cener of pixel
+  vec2Sub(&relPos, pixel, centerPos);
+  //reject pixels in specified sclice
+  if( relPos.axes[0] == 0 && relPos.axes[0]/2 == relPos.axes[0] &&
+      relPos.axes[1]/2 != relPos.axes[1]){
+    return 0;
+  }else{
+    return abRectCheck(rect,centerPos,pixel);
+  }
+}
+
+AbRect slicedRectangle = {
+        abRectGetBounds, abSlicedRectCheck, {10,5}
+};
+
+AbRect rectanglePanel = {
+        abRectGetBounds, abRectCheck, {REC_WIDTH,REC_LENGTH}
+};
+
+AbRect rectangleLine = {
+        abRectGetBounds, abSlicedRectCheck, {5,70}
+};
+
+AbRect square = {
+        abRectGetBounds, abRectCheck, {3,3}
+};
 
 
 AbRect rect10 = {abRectGetBounds, abRectCheck, {10,10}}; /**< 10x10 rectangle */
@@ -24,17 +55,26 @@ AbRArrow rightArrow = {abRArrowGetBounds, abRArrowCheck, 30};
 
 AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,   
-  {screenWidth/2 - 10, screenHeight/2 - 10}
+  {screenWidth/2 - 7, screenHeight/2 - 7}
 };
 
-  
+Layer layer4 = {
+        //blue division rectangle
+        (AbShape *)&rectangleLine,
+        //bit below & right of center
+        {(screenWidth/2)+2, (screenHeight/2)+2},
+        //last & next pos
+        {0,0}, {0,0},
+        COLOR_WHITE,
+        0
+};
 
 Layer layer3 = {		/**< Layer with an orange circle */
   (AbShape *)&circle8,
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_VIOLET,
-  //&layer4,
+  &layer4,
 };
 
 
@@ -48,14 +88,14 @@ Layer fieldLayer = {		/* playing field as a layer */
 
 Layer layer1 = {		/**< Layer with a red square */
   (AbShape *)&rect10,
-  {screenWidth/2, screenHeight/2}, /**< center */
+  {(screenWidth/2)-48, screenHeight/2}, /**< center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_RED,
   &fieldLayer,
 };
 
 Layer layer0 = {		/**< Layer with an orange circle */
-  (AbShape *)&circle14,
+  (AbShape *)&rectangelPanel,
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_ORANGE,
@@ -72,7 +112,6 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-/* initial value of {0,0} will be overwritten */
 MovLayer ml3 = { &layer3, {1,1}, 0 }; /**< not all layers move */
 MovLayer ml1 = { &layer1, {1,2}, &ml3 }; 
 MovLayer ml0 = { &layer0, {2,1}, &ml1 }; 
@@ -107,7 +146,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
 	    color = probeLayer->color;
 	    break; 
 	  } /* if probe check */
-	} // for checking all layers at col, row
+	} // for checking all layes at col, row
 	lcd_writeColor(color); 
       } // for col
     } // for row
