@@ -160,7 +160,7 @@ void main()
   configureClocks();
   lcd_init();
   shapeInit();
-  p2sw_init(1);
+  p2sw_init(15);
 
   shapeInit();
 
@@ -175,6 +175,12 @@ void main()
   or_sr(0x8);	              /**< GIE (enable interrupts) */
 
 
+  //definitions for score
+  char score[3];
+  int j;
+  for(j=0;j<3;j++)
+    score[j] = '0';
+
   for(;;) { 
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
       P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
@@ -185,6 +191,15 @@ void main()
     movLayerDraw(&ml0, &layer0);
   }
 }
+
+for(;;){
+
+
+}
+
+strScore[3] = 0;
+drawString5x7( 90, 15, strScore, COLOR_BEIGE, COLOR_BLACK);
+drawString5x7( 45, 5, "YOUR SCORE: ", COLOR_GOLD, COLOR_BLACK);
 
 /** Watchdog timer interrupt handler. 15 interrupts/sec */
 void wdt_c_handler()
