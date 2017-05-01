@@ -25,7 +25,6 @@ AbRectOutline fieldOutline = {	/* playing field */
   {screenWidth/2 - 10, screenHeight/2 - 10}
 };
 
-
   
 
 Layer layer3 = {		/**< Layer with an orange circle */
@@ -33,7 +32,7 @@ Layer layer3 = {		/**< Layer with an orange circle */
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_VIOLET,
-  &layer4,
+  //&layer4,
 };
 
 
