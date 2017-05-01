@@ -20,6 +20,22 @@
 AbRect rect10 = {abRectGetBounds, abRectCheck, {10,10}}; /**< 10x10 rectangle */
 AbRArrow rightArrow = {abRArrowGetBounds, abRArrowCheck, 30};
 
+AbRect slicedRectangle = {
+        abRectGetBounds, abSlicedRectCheck, {10,5}
+};
+
+AbRect rectanglePanel = {
+        abRectGetBounds, abRectCheck, {REC_WIDTH,REC_LENGTH}
+};
+
+AbRect rectangleLine = {
+        abRectGetBounds, abSlicedRectCheck, {5,70}
+};
+
+AbRect square = {studel
+        abRectGetBounds, abRectCheck, {3,3}
+};
+
 AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,   
   {screenWidth/2 - 10, screenHeight/2 - 10}
