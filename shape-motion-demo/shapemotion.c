@@ -47,7 +47,7 @@ AbRect rectangleLine = {
         abRectGetBounds, abSlicedRectCheck, {5,70}
 };
 
-AbRect square = {studel
+AbRect square = {
         abRectGetBounds, abRectCheck, {3,3}
 };
 
