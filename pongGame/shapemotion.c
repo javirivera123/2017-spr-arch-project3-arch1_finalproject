@@ -172,7 +172,7 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *ballLayer, MovLay
       if ((shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]) ||
 	  (shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]) ) {
 
-        clearScreen(COLOR_STEEL_BLUE);
+        clearScreen(COLOR_GOLD);
         drawString5x7(20, 60, "you lost", COLOR_GREEN, COLOR_BLACK);
 
         or_sr(0x10);
@@ -183,18 +183,18 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *ballLayer, MovLay
         int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
         newPos.axes[axis] += (2 * velocity);
 
-      }else if(  (ball->pos.axes[0]-recRadius <= leftPad->pos.axes[0] + WIDTH) &&
+      }else if(  (ball->pos.axes[0]- radius <= leftPad->pos.axes[0] + WIDTH) &&
                  (ball->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
                  (ball->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
-                 (ball->pos.axes[0]+recRadius >= rightPad->pos.axes[0] -WIDTH) &&
+                 (ball->pos.axes[0]+ radius >= rightPad->pos.axes[0] -WIDTH) &&
                  (ball->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
                  (ball->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH)
         /*    ||
         //for easy game uncomment
-        (ship->pos.axes[0]-recRadius <= leftPad->pos.axes[0] + WIDTH) &&
+        (ship->pos.axes[0]-radius <= leftPad->pos.axes[0] + WIDTH) &&
         (ship->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
         (ship->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
-        (ship->pos.axes[0]+recRadius >= rightPad->pos.axes[0] WIDTH) &&
+        (ship->pos.axes[0]+radius >= rightPad->pos.axes[0] WIDTH) &&
         (ship->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
         (ship->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH) */){
 
