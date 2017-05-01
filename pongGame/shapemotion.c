@@ -198,8 +198,8 @@ for(;;){
 }
 
 strScore[3] = 0;
-drawString5x7( 90, 15, strScore, COLOR_BEIGE, COLOR_BLACK);
-drawString5x7( 45, 5, "YOUR SCORE: ", COLOR_GOLD, COLOR_BLACK);
+drawString5x7( 90, 15, strScore, COLOR_BEIGE, BLACK);
+drawString5x7( 45, 5, "YOUR SCORE: ", COLOR_GOLD, BLACK);
 
 /** Watchdog timer interrupt handler. 15 interrupts/sec */
 void wdt_c_handler()
