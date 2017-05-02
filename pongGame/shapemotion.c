@@ -47,7 +47,7 @@ Layer BallLayerL3 = {		/** Layer with a violet Ball */
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_VIOLET,
-  &middleDiv,
+  0,
 };
 
 
@@ -150,12 +150,12 @@ void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL3, 
     vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
     abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
 
-    if (((shapeBoundary.topLeft.axes[0] <= fenceP1->botRight.axes[0]) &&  //ball bouncing
-         (shapeBoundary.topLeft.axes[1] > fenceP1->topLeft.axes[1]) &&
-         (shapeBoundary.topLeft.axes[1] < fenceP1->botRight.axes[1]))||
-        ((shapeBoundary.botRight.axes[0] >= fenceP2->topLeft.axes[0]) &&
-         (shapeBoundary.botRight.axes[1] > fenceP2->topLeft.axes[1]) &&
-         (shapeBoundary.botRight.axes[1] < fenceP2->botRight.axes[1]))) {
+    if (((shapeBoundary.topLeft.axes[0] <= fence->botRight.axes[0]) &&  //ball bouncing
+         (shapeBoundary.topLeft.axes[1] > fence->topLeft.axes[1]) &&
+         (shapeBoundary.topLeft.axes[1] < fence->botRight.axes[1]))||
+        ((shapeBoundary.botRight.axes[0] >= fence->topLeft.axes[0]) &&
+         (shapeBoundary.botRight.axes[1] > fence->topLeft.axes[1]) &&
+         (shapeBoundary.botRight.axes[1] < fence->botRight.axes[1]))) {
         int velocity = ml->velocity.axes[0] = -ml->velocity.axes[0];
         newPos.axes[0] += (2*velocity);
        }	/**< if outside of fence */
@@ -189,7 +189,7 @@ void updateScore(int player){
     onesPlace++;
 
     if(player == 1){
-      score1 = '0'+onesPlace;
+      score1[2] = onesPlace;
     }
     else{
       score2[2] = onesPlace;
