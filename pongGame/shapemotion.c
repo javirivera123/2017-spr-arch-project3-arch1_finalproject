@@ -23,6 +23,10 @@ static int increment;
 static int onesPlace = 0;
 static int tensPlace = 0;
 static int hundredsPlace = 0;
+//definitions for score
+static char score1[3];
+static char score2[3];
+
 
 
 AbRect rectanglePanel = {
@@ -165,17 +169,65 @@ void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL3, 
 
 /* Manages collisions between ball and vertical walls */
     if(shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]){
-        updateScore(1);
-        //return 1;
+        increment = 1;
     }
 
     if(shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]){
-        updateScore(0);
-        //return 1;
+        increment = 1;
+
     }
 
     ml->layer->posNext = newPos; // UPDATE POSNEXT
-    //return 0;
+
+}
+
+/** Function receives an int and determines which player to update the
+ *  the score for. If zero update player 1, else update player 2 */
+void updateScore(int player){
+
+  if (onesPlace<9 && increment > 0 ) {
+    onesPlace++;
+
+    if(player == 1){
+      score1 = '0'+onesPlace;
+    }
+    else{
+      score2[2] = onesPlace;
+    }
+    increment = 0;
+
+  }else if(increment > 0 && onesPlace == 9 && tensPlace < 9) {
+    onesPlace = 0;
+    tensPlace++;
+
+    if(player == 1){
+      score1[2] = onesPlace;
+      score1[1] = tensPlace;
+    }
+    else{
+      score2[2] = onesPlace;
+      score2[1] = tensPlace;
+    }
+    increment = 0;
+
+  }else if( onesPlace == 9 && tensPlace == 9 && hundredsPlace < 9 && increment > 0) {
+    onesPlace = 0;
+    tensPlace = 0;
+    hundredsPlace++;
+
+    if(player == 1){
+      score1[2] = onesPlace;
+      score1[1] = tensPlace;
+      score1[0] = hundredsPlace;
+    }
+    else{
+      score2[2] = onesPlace;
+      score2[1] = tensPlace;
+      score2[0] = hundredsPlace;
+    }
+    increment = 0;
+  }
+
 }
 
 
@@ -211,21 +263,23 @@ void main() {
   or_sr(0x8);                  /**< GIE (enable interrupts) */
 
 
-  //definitions for score
-  char score1[3];
-  char score2[3];
   u_int j;
+
   for (j = 0; j < 3; j++)
     score1[j] = '0';
     score2[j] = '0';
 
 
 
-  drawString5x7(20, 15, score1, COLOR_RED, COLOR_BLACK);
-  drawString5x7(10, 5, "P1 SCORE", COLOR_GOLD, COLOR_BLACK);
 
-  drawString5x7(25, 15, score2, COLOR_RED, COLOR_BLACK);
-  drawString5x7(45, 5, "P2 SCORE", COLOR_GOLD, COLOR_BLACK);
+
+  drawString5x7(45, 5, "SCORE", COLOR_GOLD, COLOR_BLACK);
+  drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
+  drawString5x7(104,3,score2,COLOR_GOLD, COLOR_BLACK);
+
+
+  score1[3] = 0;
+  score2[3] = 0;
 
   for (;;) {
 
@@ -238,38 +292,13 @@ void main() {
     redrawScreen = 0;
     movLayerDraw(&ml0, &rightPadL0);
 
-    score1[3] = 0;
-    score2[3] = 0;
+
+    drawString5x7(45, 5, "SCORE", COLOR_GOLD, COLOR_BLACK);
+    drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
+    drawString5x7(104,3,score2,COLOR_GOLD, COLOR_BLACK);
 
 
-    if ( onesPlace<9 && increment == 1 ) {
-      increment = 0;
-      onesPlace++;
-      score1[2] = onesPlace;
-        score2[2] = onesPlace;
 
-
-    }else if(increment == 1 && onesPlace == 9 && tensPlace < 9) {
-      increment = 0;
-      onesPlace = 0;
-      tensPlace++;
-      score1[2] = onesPlace;
-      score1[1] = tensPlace;
-        score2[2] = onesPlace;
-        score2[1] = tensPlace;
-
-    }else if( onesPlace == 9 && tensPlace == 9 && hundredsPlace < 9 && increment == 1) {
-      increment = 0;
-      onesPlace = 0;
-      tensPlace = 0;
-      hundredsPlace++;
-      score1[2] = onesPlace;
-      score1[1] = tensPlace;
-      score1[0] = hundredsPlace;
-        score2[2] = onesPlace;
-        score2[1] = tensPlace;
-        score2[0] = hundredsPlace;
-    }
   }
 
  }
@@ -327,9 +356,14 @@ void wdt_c_handler()
     detectCollisions( &leftPadL1, &rightPadL0, &BallLayerL3, &ml0, &fieldFence);
     u_int sw ;
     sw = p2sw_read();
-
     buttonSense(sw,&ml1,&ml0);
-      }
+
+    if(increment==1)
+      updateScore(1);
+  }
+  else{
+    updateScore(2);
+  }
 
 
   P1OUT &= ~GREEN_LED;		    /**< Green LED off when cpu off */
