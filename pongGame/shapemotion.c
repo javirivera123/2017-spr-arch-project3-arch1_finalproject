@@ -81,10 +81,12 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml3 = { &BallLayerL3, {-1,2}, 0 };
-MovLayer ml1 = { &leftPadL1, {0,1}, &ml3 };
-MovLayer ml0 = { &rightPadL0, {0,1}, &ml1 };
+MovLayer ml3 = { &BallLayerL3, {-1,2}, 0 };//layer for ball
+MovLayer ml1 = { &leftPadL1, {0,1}, &ml3 };//left paddle
+MovLayer ml0 = { &rightPadL0, {0,1}, &ml1 };//right paddle
 
+
+//moves layers in game
 void movLayerDraw(MovLayer *movLayers, Layer *layers)
 {
   int row, col;
@@ -141,44 +143,39 @@ void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL3, 
   Layer *Ball = BallLayerL3;
 
   Region shapeBoundary;
-  for (; ml; ml = ml->next) {
     vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
     abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
-    for (axis = 0; axis < 2; axis ++) {
-      if ((shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]) ||
-	  (shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]) ) {
 
-        clearScreen(COLOR_STEEL_BLUE);
-        drawString5x7(20, 60, "you lost", COLOR_GREEN, COLOR_BLACK);
+    if (((shapeBoundary.topLeft.axes[0] <= fenceP1->botRight.axes[0]) &&
+         (shapeBoundary.topLeft.axes[1] > fenceP1->topLeft.axes[1]) &&
+         (shapeBoundary.topLeft.axes[1] < fenceP1->botRight.axes[1]))||
+        ((shapeBoundary.botRight.axes[0] >= fenceP2->topLeft.axes[0]) &&
+         (shapeBoundary.botRight.axes[1] > fenceP2->topLeft.axes[1]) &&
+         (shapeBoundary.botRight.axes[1] < fenceP2->botRight.axes[1]))) {
+        int velocity = ml->velocity.axes[0] = -ml->velocity.axes[0];
+        newPos.axes[0] += (2*velocity);
+       }	/**< if outside of fence */
 
-        or_sr(0x10);
-        P1OUT &= ~GREEN_LED;
-      }else if((shapeBoundary.topLeft.axes[1] < fence->topLeft.axes[1]) ||
-               (shapeBoundary.botRight.axes[1] > fence->botRight.axes[1]) ) {
+    //hori wall
+    if((shapeBoundary.topLeft.axes[1] <= fence->topLeft.axes[1]) ||
+       (shapeBoundary.botRight.axes[1] >= fence->botRight.axes[1])){
+          int velocity = ml->velocity.axes[1] = -ml->velocity.axes[1];
+           newPos.axes[1] += (2*velocity);
+    }
 
-        int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-        newPos.axes[axis] += (2 * velocity);
+/* Manages collisions between ball and vertical walls */
+    if(shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]){
+        updateScore(1);
+        return 1;
+    }
 
-      }else if(
+    if(shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]){
+        updateScore(0);
+        return 1;
+    }
 
-        (Ball->pos.axes[0]-radius <= leftPadL1->pos.axes[0] + WIDTH) &&
-        (Ball->pos.axes[1] >= leftPadL1->pos.axes[1] - LENGTH) &&
-        (Ball->pos.axes[1] <= leftPadL1->pos.axes[1] + LENGTH)  ||
-        (Ball->pos.axes[0]+radius >= rightPadL0->pos.axes[0] - WIDTH) &&
-        (Ball->pos.axes[1] <= rightPadL0->pos.axes[1] + LENGTH) &&
-        (Ball->pos.axes[1] >= rightPadL0->pos.axes[1] - LENGTH) ){
-
-        //set flag to give points
-        increment = 1;
-        //change velocity and direction
-        int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-        newPos.axes[axis] += (8*velocity);
-
-
-      }	/**< if outside of fence */
-    } /**< for axis */
-    ml->layer->posNext = newPos;
-  } /**< for ml */
+    ml->layer->posNext = newPos; // UPDATE POSNEXT
+    return 0;
 }
 
 
