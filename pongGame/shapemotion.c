@@ -139,7 +139,6 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
  */
 void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL3, MovLayer *ml, Region *fence )
 {
-  int radius = (WIDTH/2);
   Vec2 newPos;
   u_char axis;
   Layer *Pad1 = rightPadL0;
@@ -268,7 +267,7 @@ void main() {
 
   drawString5x7(45, 5, "SCORE", COLOR_GOLD, COLOR_BLACK);
   drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
-  drawString5x7(104,3,score2,COLOR_GOLD, COLOR_BLACK);
+  drawString5x7(90,3,score2,COLOR_GOLD, COLOR_BLACK);
 
 
   score1[3] = 0;
@@ -349,18 +348,17 @@ void wdt_c_handler()
   static short count = 0;
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
-  //if (count == 15) {
-    detectCollisions( &leftPadL1, &rightPadL0, &BallLayerL3, &ml0, &fieldFence);
+  if (count == 15) {
+    detectCollisions(&leftPadL1, &rightPadL0, &BallLayerL3, &ml0, &fieldFence);
     u_int sw = p2sw_read();
-    buttonSense(sw,&ml1,&ml0);
+    buttonSense(sw, &ml1, &ml0);
 
-    if(increment > 0){
+    if (increment > 0) {
       updateScore(1);
+    } else {
+      updateScore(2);
+    }
   }
-  else{
-    updateScore(2);
-  }
-
 
   P1OUT &= ~GREEN_LED;		    /**< Green LED off when cpu off */
 }
