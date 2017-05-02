@@ -146,7 +146,7 @@ void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL3, 
     vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
     abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
 
-    if (((shapeBoundary.topLeft.axes[0] <= fenceP1->botRight.axes[0]) &&
+    if (((shapeBoundary.topLeft.axes[0] <= fenceP1->botRight.axes[0]) &&  //ball bouncing
          (shapeBoundary.topLeft.axes[1] > fenceP1->topLeft.axes[1]) &&
          (shapeBoundary.topLeft.axes[1] < fenceP1->botRight.axes[1]))||
         ((shapeBoundary.botRight.axes[0] >= fenceP2->topLeft.axes[0]) &&
@@ -166,16 +166,16 @@ void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL3, 
 /* Manages collisions between ball and vertical walls */
     if(shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]){
         updateScore(1);
-        return 1;
+        //return 1;
     }
 
     if(shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]){
         updateScore(0);
-        return 1;
+        //return 1;
     }
 
     ml->layer->posNext = newPos; // UPDATE POSNEXT
-    return 0;
+    //return 0;
 }
 
 
