@@ -173,7 +173,7 @@ void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL3, 
     }
 
     if(shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]){
-        increment = 1;
+        increment = 2;
 
     }
 
@@ -352,13 +352,13 @@ void wdt_c_handler()
   static short count = 0;
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
-  if (count == 15) {
+  //if (count == 15) {
     detectCollisions( &leftPadL1, &rightPadL0, &BallLayerL3, &ml0, &fieldFence);
     u_int sw ;
     sw = p2sw_read();
     buttonSense(sw,&ml1,&ml0);
 
-    if(increment==1)
+    if(increment > 0){
       updateScore(1);
   }
   else{
