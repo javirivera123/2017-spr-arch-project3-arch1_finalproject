@@ -349,7 +349,7 @@ void wdt_c_handler()
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
   if (count == 15) {
-    detectCollisions( &leftPad, &rightPad &BallLayer, &ml0, &fieldFence);
+    detectCollisions( &leftPad, &rightPad, &BallLayer, &ml0, &fieldFence);
     u_int sw = p2sw_read(),i;
     char string[5];
     for(i = 0; i<4; i++){
