@@ -14,6 +14,7 @@
 #include <p2switches.h>
 #include <shape.h>
 #include <abCircle.h>
+#include "buzzer.h"
 
 #define GREEN_LED BIT6
 #define WIDTH 2
@@ -172,7 +173,7 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *BallLayer, MovLay
       if ((shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]) ||
 	  (shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]) ) {
 
-        clearScreen(COLOR_GOLD);
+        clearScreen(COLOR_STEEL_BLUE);
         drawString5x7(20, 60, "you lost", COLOR_GREEN, COLOR_BLACK);
 
         or_sr(0x10);
@@ -183,12 +184,12 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *BallLayer, MovLay
         int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
         newPos.axes[axis] += (2 * velocity);
 
-      }else if(  (Ball->pos.axes[0]- radius <= leftPad->pos.axes[0] + WIDTH) &&
-                 (Ball->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
-                 (Ball->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
-                 (Ball->pos.axes[0]+ radius >= rightPad->pos.axes[0] -WIDTH) &&
-                 (Ball->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
-                 (Ball->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH)
+      }else if(  (Ball->pos.axes[0]- radius <= Pad2->pos.axes[0] + WIDTH) &&
+                 (Ball->pos.axes[1] >= Pad2->pos.axes[1] - LENGTH) &&
+                 (Ball->pos.axes[1] <= Pad2->pos.axes[1] + LENGTH)  ||
+                 (Ball->pos.axes[0]+ radius >= Pad2->pos.axes[0] -WIDTH) &&
+                 (Ball->pos.axes[1] <= Pad2->pos.axes[1] + LENGTH) &&
+                 (Ball->pos.axes[1] >= Pad2->pos.axes[1] - LENGTH)
         /*    ||
         //for easy game uncomment
         (ship->pos.axes[0]-radius <= leftPad->pos.axes[0] + WIDTH) &&
@@ -229,6 +230,7 @@ void main() {
   lcd_init();
   shapeInit();
   p2sw_init(15);
+  buzzer_init();
 
   shapeInit();
 
@@ -343,11 +345,29 @@ void buttonSense(int j, MovLayer *left, MovLayer *right){
   int velocity = left->velocity.axes[1];
 
   if(j==b1){
+    upBuzz(); //sound for up
+    lPadUpdate.axes[1] += (velocity+10);
+    left->layer->posNext = lPadUpdate;
+
+  }
+
+  else if(j==b2){
+    downBuzz();
     lPadUpdate.axes[1] += (velocity-10);
     left->layer->posNext = lPadUpdate;
 
+  }
+  else if(j==b3){
+    upBuzz();
+    rPadUpdate.axes[1] += (velocity+10);
+    right->layer->posNext = rPadUpdate;
+
+  }
+  else if(j==b4){
+    downBuzz();
     rPadUpdate.axes[1] += (velocity-10);
     right->layer->posNext = rPadUpdate;
+
   }
 
 }
