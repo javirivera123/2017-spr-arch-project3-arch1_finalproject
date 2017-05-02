@@ -49,7 +49,7 @@ AbRect rectangleLine = {
 
 AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,   
-  {screenWidth/2 - 4, screenHeight/2 - 4}
+  {screenWidth/2-5, screenHeight/2-5
 };
 
 Layer middleDiv = {
@@ -77,7 +77,7 @@ Layer fieldLayer = {		/* playing field as a layer */
   {screenWidth/2, screenHeight/2},/**< center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &BallLayer
+  &BallLayer,
 };
 
 Layer leftPad = {		/**< Layer with left pad */
@@ -184,20 +184,14 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *BallLayer, MovLay
         int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
         newPos.axes[axis] += (2 * velocity);
 
-      }else if(  (Ball->pos.axes[0]- radius <= Pad2->pos.axes[0] + WIDTH) &&
-                 (Ball->pos.axes[1] >= Pad2->pos.axes[1] - LENGTH) &&
-                 (Ball->pos.axes[1] <= Pad2->pos.axes[1] + LENGTH)  ||
-                 (Ball->pos.axes[0]+ radius >= Pad2->pos.axes[0] -WIDTH) &&
-                 (Ball->pos.axes[1] <= Pad2->pos.axes[1] + LENGTH) &&
-                 (Ball->pos.axes[1] >= Pad2->pos.axes[1] - LENGTH)
-        /*    ||
-        //for easy game uncomment
-        (ship->pos.axes[0]-radius <= leftPad->pos.axes[0] + WIDTH) &&
-        (ship->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
-        (ship->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
-        (ship->pos.axes[0]+radius >= rightPad->pos.axes[0] WIDTH) &&
-        (ship->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
-        (ship->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH) */){
+      }else if(
+
+        (Ball->pos.axes[0]-radius <= leftPad->pos.axes[0] + WIDTH) &&
+        (Ball->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
+        (Ball->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
+        (Ball->pos.axes[0]+radius >= rightPad->pos.axes[0] WIDTH) &&
+        (Ball->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
+        (Ball->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH) ){
 
         //set flag to give points
         increment = 1;
@@ -268,10 +262,10 @@ void main() {
     score2[3] = 0;
 
     drawString5x7(20, 15, score1, COLOR_RED, COLOR_BLACK);
-    drawString5x7(10, 5, "P1 SCORE: ", COLOR_GOLD, COLOR_BLACK);
+    drawString5x7(10, 5, "P1 SCORE", COLOR_GOLD, COLOR_BLACK);
 
-    drawString5x7(50, 15, score2, COLOR_RED, COLOR_BLACK);
-    drawString5x7(45, 5, "P2 SCORE: ", COLOR_GOLD, COLOR_BLACK);
+    drawString5x7(25, 15, score2, COLOR_RED, COLOR_BLACK);
+    drawString5x7(45, 5, "P2 SCORE", COLOR_GOLD, COLOR_BLACK);
 
     if ( onesPlace<9 && increment == 1 ) {
       increment = 0;
@@ -305,7 +299,7 @@ void main() {
 
  }
 
-void buttonSense(int j, MovLayer *left, MovLayer *right){
+void buttonSense(int j, MovLayer *left, MovLayer *right) {
   int b1=0;
   int b2=0;
   int b3=0;
@@ -355,7 +349,7 @@ void wdt_c_handler()
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
   if (count == 15) {
-    detectCollisions(&rightPad, &leftPad, &BallLayer, &ml0, &fieldFence);
+    detectCollisions( &leftPad, &rightPad &BallLayer, &ml0, &fieldFence);
     u_int sw = p2sw_read(),i;
     char string[5];
     for(i = 0; i<4; i++){
