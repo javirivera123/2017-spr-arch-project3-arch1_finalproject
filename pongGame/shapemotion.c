@@ -268,7 +268,7 @@ void main() {
     drawString5x7(20, 15, score1, COLOR_RED, COLOR_BLACK);
     drawString5x7(10, 5, "P1 SCORE: ", COLOR_GOLD, COLOR_BLACK);
 
-    drawString5x7(90, 15, score2, COLOR_RED, COLOR_BLACK);
+    drawString5x7(50, 15, score2, COLOR_RED, COLOR_BLACK);
     drawString5x7(45, 5, "P2 SCORE: ", COLOR_GOLD, COLOR_BLACK);
 
     if ( onesPlace<9 && increment == 1 ) {
@@ -329,9 +329,14 @@ void buttonSense(int j, MovLayer *left, MovLayer *right){
   vec2Add(&lPadUpdate, &left->layer->posNext, &left->velocity);
   vec2Add(&rPadUpdate, &right->layer->posNext, &right->velocity);
 
-  //int velo
+  int velocity = left->velocity.axes[1];
 
+  if(j==b1){
+    lPadUpdate.axes[1] += (velocity-10);
+    left->layer->posNext = lPadUpdate;
 
-
+    rPadUpdate.axes[1] += (velocity-10);
+    right->layer->posNext = rPadUpdate;
+  }
 
 }
