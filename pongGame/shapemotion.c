@@ -245,8 +245,8 @@ void main() {
 
   //definitions for score
   char score1[3];
-  char score2[3]
-  int j;
+  char score2[3];
+  u_int j;
   for (j = 0; j < 3; j++)
     score1[j] = '0';
     score2[j] = '0';
@@ -265,10 +265,10 @@ void main() {
     score1[3] = 0;
     score2[3] = 0;
 
-    drawString5x7(20, 15, score, COLOR_RED, COLOR_BLACK);
+    drawString5x7(20, 15, score1, COLOR_RED, COLOR_BLACK);
     drawString5x7(10, 5, "P1 SCORE: ", COLOR_GOLD, COLOR_BLACK);
 
-    drawString5x7(90, 15, score, COLOR_RED, COLOR_BLACK);
+    drawString5x7(90, 15, score2, COLOR_RED, COLOR_BLACK);
     drawString5x7(45, 5, "P2 SCORE: ", COLOR_GOLD, COLOR_BLACK);
 
     if ( onesPlace<9 && increment == 1 ) {
@@ -316,7 +316,7 @@ void buttonSense(int j, MovLayer *left, MovLayer *right){
   int b3=0;
   int b4=0;
 
-  Vec2 lPadUpdate
+  Vec2 lPadUpdate;
   Vec2 rPadUpdate;
 
   vec2Add(&lPadUpdate, &left->layer->posNext, &left->velocity);
