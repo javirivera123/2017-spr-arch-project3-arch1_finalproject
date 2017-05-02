@@ -274,23 +274,30 @@ void main() {
     if ( onesPlace<9 && increment == 1 ) {
       increment = 0;
       onesPlace++;
-      score[2] = onesPlace;
+      score1[2] = onesPlace;
+        score2[2] = onesPlace;
+
 
     }else if(increment == 1 && onesPlace == 9 && tensPlace < 9) {
       increment = 0;
       onesPlace = 0;
       tensPlace++;
-      score[2] = onesPlace;
-      score[1] = tensPlace;
+      score1[2] = onesPlace;
+      score1[1] = tensPlace;
+        score2[2] = onesPlace;
+        score2[1] = tensPlace;
 
     }else if( onesPlace == 9 && tensPlace == 9 && hundredsPlace < 9 && increment == 1) {
       increment = 0;
       onesPlace = 0;
       tensPlace = 0;
       hundredsPlace++;
-      score[2] = onesPlace;
-      score[1] = tensPlace;
-      score[0] = hundredsPlace;
+      score1[2] = onesPlace;
+      score1[1] = tensPlace;
+      score1[0] = hundredsPlace;
+        score2[2] = onesPlace;
+        score2[1] = tensPlace;
+        score2[0] = hundredsPlace;
     }
   }
 
