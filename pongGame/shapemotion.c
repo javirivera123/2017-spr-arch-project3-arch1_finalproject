@@ -249,11 +249,19 @@ void main() {
 
 
 
+  drawString5x7(20, 15, score1, COLOR_RED, COLOR_BLACK);
+  drawString5x7(10, 5, "P1 SCORE", COLOR_GOLD, COLOR_BLACK);
+
+  drawString5x7(25, 15, score2, COLOR_RED, COLOR_BLACK);
+  drawString5x7(45, 5, "P2 SCORE", COLOR_GOLD, COLOR_BLACK);
+
   for (;;) {
+
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
       P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
       or_sr(0x10);          /**< CPU OFF */
     }
+
     P1OUT |= GREEN_LED;       /**< Green led on when CPU on */
     redrawScreen = 0;
     movLayerDraw(&ml0, &rightPad);
@@ -261,11 +269,6 @@ void main() {
     score1[3] = 0;
     score2[3] = 0;
 
-    drawString5x7(20, 15, score1, COLOR_RED, COLOR_BLACK);
-    drawString5x7(10, 5, "P1 SCORE", COLOR_GOLD, COLOR_BLACK);
-
-    drawString5x7(25, 15, score2, COLOR_RED, COLOR_BLACK);
-    drawString5x7(45, 5, "P2 SCORE", COLOR_GOLD, COLOR_BLACK);
 
     if ( onesPlace<9 && increment == 1 ) {
       increment = 0;
@@ -350,20 +353,12 @@ void wdt_c_handler()
   count ++;
   if (count == 15) {
     detectCollisions( &leftPad, &rightPad, &BallLayer, &ml0, &fieldFence);
-    u_int sw = p2sw_read(),i;
-    char string[5];
-    for(i = 0; i<4; i++){
-      if ((sw & (1<<i))){
-        string[i]='-';
-      }else{
-        string[i] = '0'+i;
-        buttonSense(i,&ml1,&ml0);
+    u_int sw ;
+    sw = p2sw_read();
+
+    buttonSense(i,&ml1,&ml0);
       }
-    }
-    string[4]=0;
-    drawString5x7(20,10,string,COLOR_YELLOW, COLOR_BLUE);
-    redrawScreen = 1;
-    count = 0;
-  } 
+
+
   P1OUT &= ~GREEN_LED;		    /**< Green LED off when cpu off */
 }
