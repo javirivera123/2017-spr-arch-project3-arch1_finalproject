@@ -351,7 +351,7 @@ void wdt_c_handler()
   count ++;
   //if (count == 15) {
     detectCollisions( &leftPadL1, &rightPadL0, &BallLayerL3, &ml0, &fieldFence);
-    sw = p2sw_read();
+    u_int sw = p2sw_read();
     buttonSense(sw,&ml1,&ml0);
 
     if(increment > 0){
