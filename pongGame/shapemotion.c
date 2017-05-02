@@ -363,7 +363,7 @@ void wdt_c_handler()
         string[i]='-';
       }else{
         string[i] = '0'+i;
-        buttonSense(i,&ml1, &ml0);
+        buttonSense(i,&ml1,&ml0);
       }
     }
     string[4]=0;
