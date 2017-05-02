@@ -304,9 +304,9 @@ void main() {
 
 void buttonSense(int j, MovLayer *left, MovLayer *right) {
   int b1=0;
-  int b2=0;
-  int b3=0;
-  int b4=0;
+  int b2=1;
+  int b3=2;
+  int b4=3;
 
   Vec2 lPadUpdate;
   Vec2 rPadUpdate;
@@ -356,7 +356,7 @@ void wdt_c_handler()
     u_int sw ;
     sw = p2sw_read();
 
-    buttonSense(i,&ml1,&ml0);
+    buttonSense(sw,&ml1,&ml0);
       }
 
 
