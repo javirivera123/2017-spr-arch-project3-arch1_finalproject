@@ -49,7 +49,7 @@ AbRect rectangleLine = {
 
 AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,   
-  {screenWidth/2-5, screenHeight/2-5
+  {screenWidth/2-5, screenHeight/2-5}
 };
 
 Layer middleDiv = {
