@@ -189,7 +189,7 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *BallLayer, MovLay
         (Ball->pos.axes[0]-radius <= leftPad->pos.axes[0] + WIDTH) &&
         (Ball->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
         (Ball->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
-        (Ball->pos.axes[0]+radius >= rightPad->pos.axes[0] WIDTH) &&
+        (Ball->pos.axes[0]+radius >= rightPad->pos.axes[0] - WIDTH) &&
         (Ball->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
         (Ball->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH) ){
 
