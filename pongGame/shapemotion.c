@@ -310,8 +310,19 @@ void wdt_c_handler()
   count ++;
   if (count == 15) {
     detectCollisions(&rightPad, &leftPad, &BallLayer, &ml0, &fieldFence);
-    if (p2sw_read())
-      redrawScreen = 1;
+    u_int sw = p2sw_read(),i;
+    char string[5];
+    for(i = 0; i<4; i++){
+      if ((sw & (1<<i))){
+        string[i]='-';
+      }else{
+        string[i] = '0'+i;
+        buttonSense(i,&ml1, &ml0);
+      }
+    }
+    string[4]=0;
+    drawString5x7(20,10,string,COLOR_YELLOW, COLOR_BLUE);
+    redrawScreen = 1;
     count = 0;
   } 
   P1OUT &= ~GREEN_LED;		    /**< Green LED off when cpu off */
