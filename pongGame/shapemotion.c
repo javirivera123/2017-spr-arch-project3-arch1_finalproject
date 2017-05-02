@@ -255,23 +255,16 @@ void main() {
   layerInit(&rightPadL0);
   layerDraw(&rightPadL0);
 
-
   layerGetBounds(&fieldLayerL2, &fieldFence);
-
 
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);                  /**< GIE (enable interrupts) */
-
 
   u_int j;
 
   for (j = 0; j < 3; j++)
     score1[j] = '0';
     score2[j] = '0';
-
-
-
-
 
   drawString5x7(45, 5, "SCORE", COLOR_GOLD, COLOR_BLACK);
   drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
@@ -303,11 +296,12 @@ void main() {
 
  }
 
-void buttonSense(int j, MovLayer *left, MovLayer *right) {
-  int b1=0;
-  int b2=1;
-  int b3=2;
-  int b4=3;
+void buttonSense(u_int sw, MovLayer *left, MovLayer *right) {
+  int b1 = 0;
+  int b2 = 1;
+  int b3 = 2;
+  int b4 = 3;
+
 
   Vec2 lPadUpdate;
   Vec2 rPadUpdate;
@@ -317,32 +311,35 @@ void buttonSense(int j, MovLayer *left, MovLayer *right) {
 
   int velocity = left->velocity.axes[1];
 
-  if(j==b1){
-    upBuzz(); //sound for up
-    lPadUpdate.axes[1] += (velocity+10);
-    left->layer->posNext = lPadUpdate;
+  u_int i;
+  for (i = 0; i < 4; i++) {
+    if (!(sw & (1 << i))) {
 
+
+      if (i == b1) {
+        upBuzz(); //sound for up
+        lPadUpdate.axes[1] += (velocity + 10);
+        left->layer->posNext = lPadUpdate;
+
+      } else if (i == b2) {
+        downBuzz();
+        lPadUpdate.axes[1] += (velocity - 10);
+        left->layer->posNext = lPadUpdate;
+
+      } else if (i == b3) {
+        upBuzz();
+        rPadUpdate.axes[1] += (velocity + 10);
+        right->layer->posNext = rPadUpdate;
+
+      } else if (i == b4) {
+        downBuzz();
+        rPadUpdate.axes[1] += (velocity - 10);
+        right->layer->posNext = rPadUpdate;
+
+      }
+
+    }
   }
-
-  else if(j==b2){
-    downBuzz();
-    lPadUpdate.axes[1] += (velocity-10);
-    left->layer->posNext = lPadUpdate;
-
-  }
-  else if(j==b3){
-    upBuzz();
-    rPadUpdate.axes[1] += (velocity+10);
-    right->layer->posNext = rPadUpdate;
-
-  }
-  else if(j==b4){
-    downBuzz();
-    rPadUpdate.axes[1] += (velocity-10);
-    right->layer->posNext = rPadUpdate;
-
-  }
-
 }
 
 
@@ -354,7 +351,6 @@ void wdt_c_handler()
   count ++;
   //if (count == 15) {
     detectCollisions( &leftPadL1, &rightPadL0, &BallLayerL3, &ml0, &fieldFence);
-    u_int sw ;
     sw = p2sw_read();
     buttonSense(sw,&ml1,&ml0);
 
