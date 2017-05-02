@@ -24,27 +24,11 @@ static int onesPlace = 0;
 static int tensPlace = 0;
 static int hundredsPlace = 0;
 
-int abSlicedRectCheck(const AbRect *rect, const Vec2 *centerPos, const Vec2 *pixel){
-  Vec2 relPos;
-  //vector from cener of pixel
-  vec2Sub(&relPos, pixel, centerPos);
-  //reject pixels in specified sclice
-  if( relPos.axes[0] == 0 && relPos.axes[0]/2 == relPos.axes[0] &&
-      relPos.axes[1]/2 != relPos.axes[1]){
-    return 0;
-  }else{
-    return abRectCheck(rect,centerPos,pixel);
-  }
-}
-
 
 AbRect rectanglePanel = {
         abRectGetBounds, abRectCheck, {WIDTH, LENGTH}
 };
 
-AbRect rectangleLine = {
-        abRectGetBounds, abSlicedRectCheck, {5,70}
-};
 
 
 AbRectOutline fieldOutline = {	/* playing field */
@@ -52,18 +36,9 @@ AbRectOutline fieldOutline = {	/* playing field */
   {screenWidth/2-5, screenHeight/2-5}
 };
 
-Layer middleDiv = {
-        //middle line division
-        (AbShape *)&rectangleLine,
-        //bit below & right of center
-        {(screenWidth/2), (screenHeight/2)},
-        //last & next pos
-        {0,0}, {0,0},
-        COLOR_WHITE,
-        0
-};
 
-Layer BallLayer = {		/** Layer with a violet Ball */
+
+Layer BallLayerL3 = {		/** Layer with a violet Ball */
   (AbShape *) &circle8,
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
@@ -72,28 +47,28 @@ Layer BallLayer = {		/** Layer with a violet Ball */
 };
 
 
-Layer fieldLayer = {		/* playing field as a layer */
+Layer fieldLayerL2 = {		/* playing field as a layer */
   (AbShape *) &fieldOutline,
   {screenWidth/2, screenHeight/2},/**< center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &BallLayer,
+  &BallLayerL3,
 };
 
-Layer leftPad = {		/**< Layer with left pad */
+Layer leftPadL1 = {		/**< Layer with left pad */
   (AbShape *)&rectanglePanel,
   {(screenWidth/2)-49, (screenHeight/2)+8}, /**< left */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &fieldLayer,
+  &fieldLayerL2,
 };
 
-Layer rightPad = {		/**< Layer with right pad */
+Layer rightPadL0 = {		/**< Layer with right pad */
   (AbShape *)&rectanglePanel,
   {(screenWidth/2)+50, (screenHeight/2)+5}, /**< right */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &leftPad,
+  &leftPadL1,
 };
 
 /** Moving Layer
@@ -106,9 +81,9 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml3 = { &BallLayer, {-1,2}, 0 };
-MovLayer ml1 = { &leftPad, {0,1}, &ml3 };
-MovLayer ml0 = { &rightPad, {0,1}, &ml1 };
+MovLayer ml3 = { &BallLayerL3, {-1,2}, 0 };
+MovLayer ml1 = { &leftPadL1, {0,1}, &ml3 };
+MovLayer ml0 = { &rightPadL0, {0,1}, &ml1 };
 
 void movLayerDraw(MovLayer *movLayers, Layer *layers)
 {
@@ -156,14 +131,14 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
  *  \param ml The moving shape to be advanced
  *  \param fence The region which will serve as a boundary for ml
  */
-void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *BallLayer, MovLayer *ml, Region *fence )
+void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL3, MovLayer *ml, Region *fence )
 {
   int radius = (WIDTH/2);
   Vec2 newPos;
   u_char axis;
-  Layer *Pad1 = rightPad;
-  Layer *Pad2 = leftPad;
-  Layer *Ball = BallLayer;
+  Layer *Pad1 = rightPadL0;
+  Layer *Pad2 = leftPadL1;
+  Layer *Ball = BallLayerL3;
 
   Region shapeBoundary;
   for (; ml; ml = ml->next) {
@@ -186,12 +161,12 @@ void detectCollisions( Layer *rightPad, Layer *leftPad, Layer *BallLayer, MovLay
 
       }else if(
 
-        (Ball->pos.axes[0]-radius <= leftPad->pos.axes[0] + WIDTH) &&
-        (Ball->pos.axes[1] >= leftPad->pos.axes[1] - LENGTH) &&
-        (Ball->pos.axes[1] <= leftPad->pos.axes[1] + LENGTH)  ||
-        (Ball->pos.axes[0]+radius >= rightPad->pos.axes[0] - WIDTH) &&
-        (Ball->pos.axes[1] <= rightPad->pos.axes[1] + LENGTH) &&
-        (Ball->pos.axes[1] >= rightPad->pos.axes[1] - LENGTH) ){
+        (Ball->pos.axes[0]-radius <= leftPadL1->pos.axes[0] + WIDTH) &&
+        (Ball->pos.axes[1] >= leftPadL1->pos.axes[1] - LENGTH) &&
+        (Ball->pos.axes[1] <= leftPadL1->pos.axes[1] + LENGTH)  ||
+        (Ball->pos.axes[0]+radius >= rightPadL0->pos.axes[0] - WIDTH) &&
+        (Ball->pos.axes[1] <= rightPadL0->pos.axes[1] + LENGTH) &&
+        (Ball->pos.axes[1] >= rightPadL0->pos.axes[1] - LENGTH) ){
 
         //set flag to give points
         increment = 1;
@@ -228,11 +203,11 @@ void main() {
 
   shapeInit();
 
-  layerInit(&rightPad);
-  layerDraw(&rightPad);
+  layerInit(&rightPadL0);
+  layerDraw(&rightPadL0);
 
 
-  layerGetBounds(&fieldLayer, &fieldFence);
+  layerGetBounds(&fieldLayerL2, &fieldFence);
 
 
   enableWDTInterrupts();      /**< enable periodic interrupt */
@@ -264,7 +239,7 @@ void main() {
 
     P1OUT |= GREEN_LED;       /**< Green led on when CPU on */
     redrawScreen = 0;
-    movLayerDraw(&ml0, &rightPad);
+    movLayerDraw(&ml0, &rightPadL0);
 
     score1[3] = 0;
     score2[3] = 0;
@@ -352,7 +327,7 @@ void wdt_c_handler()
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
   if (count == 15) {
-    detectCollisions( &leftPad, &rightPad, &BallLayer, &ml0, &fieldFence);
+    detectCollisions( &leftPadL1, &rightPadL0, &BallLayerL3, &ml0, &fieldFence);
     u_int sw ;
     sw = p2sw_read();
 
