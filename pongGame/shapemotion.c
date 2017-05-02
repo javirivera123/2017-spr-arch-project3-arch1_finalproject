@@ -322,7 +322,7 @@ void buttonSense(int j, MovLayer *left, MovLayer *right){
   vec2Add(&lPadUpdate, &left->layer->posNext, &left->velocity);
   vec2Add(&rPadUpdate, &right->layer->posNext, &right->velocity);
 
-  int velo
+  //int velo
 
 
 
