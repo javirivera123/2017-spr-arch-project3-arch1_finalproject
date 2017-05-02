@@ -286,9 +286,9 @@ void main() {
     movLayerDraw(&ml0, &rightPadL0);
 
 
-    drawString5x7(45, 5, "SCORE", COLOR_GOLD, COLOR_BLACK);
+    drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK);
     drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
-    drawString5x7(10,3,score2,COLOR_GOLD, COLOR_BLACK);
+    drawString5x7(100,3,score2,COLOR_GREEN, COLOR_BLACK);
 
 
 
