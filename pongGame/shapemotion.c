@@ -239,6 +239,10 @@ void main() {
 
   layerInit(&rightPadL0);
   layerDraw(&rightPadL0);
+     layerInit(&leftPadL1);
+     layerDraw(&leftPadL1);
+     layerInit(&BallLayerL2);
+     layerDraw(&BallLayerL2);
 
 
   layerGetBounds(&fieldLayerL3, &fieldFence);
