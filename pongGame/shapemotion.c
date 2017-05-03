@@ -164,12 +164,12 @@ void detectCollisions( MovLayer *ml, MovLayer *p1, MovLayer *p2, Region *fenceP1
     vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
     abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
 
-    if (((shapeBoundary.topLeft.axes[0] <= fenceP1->botRight.axes[0]) &&  //ball bouncing
-         (shapeBoundary.topLeft.axes[1] > fenceP1->topLeft.axes[1]) &&
-         (shapeBoundary.topLeft.axes[1] < fenceP1->botRight.axes[1]))||
-        ((shapeBoundary.botRight.axes[0] >= fenceP2->topLeft.axes[0]) &&
-         (shapeBoundary.botRight.axes[1] > fenceP2->topLeft.axes[1]) &&
-         (shapeBoundary.botRight.axes[1] < fenceP2->botRight.axes[1]))) {
+    if (((shapeBoundary.topLeft.axes[0] <= fence2->botRight.axes[0]) &&  //ball bouncing collisions
+         (shapeBoundary.topLeft.axes[1] > fenceP2->topLeft.axes[1]) &&
+         (shapeBoundary.topLeft.axes[1] < fenceP2->botRight.axes[1]))||
+        ((shapeBoundary.botRight.axes[0] >= fenceP1->topLeft.axes[0]) &&
+         (shapeBoundary.botRight.axes[1] > fenceP1->topLeft.axes[1]) &&
+         (shapeBoundary.botRight.axes[1] < fenceP1->botRight.axes[1]))) {
         int velocity = ml->velocity.axes[0] = -ml->velocity.axes[0];
         newPos.axes[0] += (2*velocity);
        }	/**< if outside of fence */
