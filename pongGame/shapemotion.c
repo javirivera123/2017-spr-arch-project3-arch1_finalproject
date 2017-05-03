@@ -71,7 +71,7 @@ Layer rightPadL0 = {		/**< Layer with right pad */
   {(screenWidth/2)+50, (screenHeight/2)+5}, /**< right */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &leftPadL1,
+  0,
 };
 
 /** Moving Layer
