@@ -295,7 +295,7 @@ void main() {
 
  }
 
-void buttonSense(u_int sw, MovLayer *left, MovLayer *right) {
+void buttonSense(u_int i, MovLayer *left, MovLayer *right) {
   int b1 = 0;
   int b2 = 1;
   int b3 = 2;
