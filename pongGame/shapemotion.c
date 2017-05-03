@@ -54,7 +54,7 @@ Layer BallLayerL2 = {		/** Layer with a violet Ball */
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_VIOLET,
-  &fieldLayerL3,
+  0,
 };
  
 
@@ -63,7 +63,7 @@ Layer leftPadL1 = {		/**< Layer with left pad */
   {(screenWidth/2)-49, (screenHeight/2)+8}, /**< left */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &BallLayerL2,
+  0,
 };
 
 Layer rightPadL0 = {		/**< Layer with right pad */
@@ -71,7 +71,7 @@ Layer rightPadL0 = {		/**< Layer with right pad */
   {(screenWidth/2)+50, (screenHeight/2)+5}, /**< right */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &leftPadL1,
+  0,
 };
 
 /** Moving Layer
@@ -344,11 +344,14 @@ void buttonSense(u_int i, MovLayer *left, MovLayer *right) {
     }
 */
 
+ void wallHit(){
+
+
+ };
+
 
 /** Watchdog timer interrupt handler. 15 interrupts/sec */
 void wdt_c_handler() {
-   static short count = 0;
-   P1OUT |= GREEN_LED;              /**< Green LED on when cpu on */
 
    if (count++ == 15) {
 
@@ -365,23 +368,27 @@ void wdt_c_handler() {
        if (!(switches & (1 << i))) {
          if (i == 0) {
            ml0.velocity.axes[1] = -4;
+           downBuzz();
            movLayerDraw(&ml0, &rightPadL0);
            mlAdvance(&ml0, &fieldFence);
            redrawScreen = 1;
          }
          if (i == 1) {
+           upBuzz();
            ml0.velocity.axes[1] = 4;
            movLayerDraw(&ml0, &rightPadL0);
            mlAdvance(&ml0, &fieldFence);
            redrawScreen = 1;
          }
          if (i == 2) {
+           downBuzz();
            ml1.velocity.axes[1] = -4;
            movLayerDraw(&ml1, &leftPadL1);
            mlAdvance(&ml1, &fieldFence);
            redrawScreen = 1;
          }
          if (i == 3) {
+           upBuzz();
            ml1.velocity.axes[1] = 4;
            movLayerDraw(&ml1, &leftPadL1);
            mlAdvance(&ml1, &fieldFence);
