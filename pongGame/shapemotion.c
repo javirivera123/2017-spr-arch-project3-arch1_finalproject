@@ -295,7 +295,7 @@ void main() {
 
  }
 
-void buttonSense(u_int sw, MovLayer *left, MovLayer *right) {
+/*void buttonSense(u_int sw, MovLayer *left, MovLayer *right) {
   int b1 = 0;
   int b2 = 1;
   int b3 = 2;
@@ -340,7 +340,7 @@ void buttonSense(u_int sw, MovLayer *left, MovLayer *right) {
     }
   }
 }
-
+*/
 
 /** Watchdog timer interrupt handler. 15 interrupts/sec */
 void wdt_c_handler()
@@ -351,14 +351,45 @@ void wdt_c_handler()
   if (count == 15) {
     detectCollisions(&leftPadL1, &rightPadL0, &BallLayerL3, &ml0, &fieldFence);
     u_int sw = p2sw_read();
-    buttonSense(sw, &ml1, &ml0);
+    // buttonSense(sw, &ml1, &ml0);
 
     if (increment > 0) {
       updateScore(1);
     } else {
       updateScore(2);
     }
-  }
 
+    u_int switches = p2sw_read(), i;
+    for (i = 0; i < 4; i++) {
+      if (!(switches & (1 << i))) {
+        if (i == 0) {
+          ml0.velocity.axes[1] = -4;
+          movLayerDraw(&ml0, &layer0);
+          mlAdvance(&ml0, &fieldFence);
+          redrawScreen = 1;
+        }
+        if (i == 1) {
+          ml0.velocity.axes[1] = 4;
+          movLayerDraw(&ml0, &layer0);
+          mlAdvance(&ml0, &fieldFence);
+          redrawScreen = 1;
+        }
+        if (i == 2) {
+          ml1.velocity.axes[1] = -4;
+          movLayerDraw(&ml1, &layer1);
+          mlAdvance(&ml1, &fieldFence);
+          redrawScreen = 1;
+        }
+        if (i == 3) {
+          ml1.velocity.axes[1] = 4;
+          movLayerDraw(&ml1, &layer1);
+          mlAdvance(&ml1, &fieldFence);
+          redrawScreen = 1;
+        }
+      }
+    }
+
+  }
+  count = 0;
   P1OUT &= ~GREEN_LED;		    /**< Green LED off when cpu off */
 }
