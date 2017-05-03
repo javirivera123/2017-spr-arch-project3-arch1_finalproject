@@ -355,10 +355,10 @@ void wdt_c_handler()
     if (count++ == 15)
 
       /* Update paddle region for collisions */
-      layerGetBounds(&layer0, &fencePaddle1);
-  layerGetBounds(&layer1, &fencePaddle2);
+      layerGetBounds(&leftPadL1, &fencePaddle1);
+  layerGetBounds(&rightPadL0, &fencePaddle2);
 
-  movLayerDraw(&mlball,&layer2); // Move ball around
+  movLayerDraw(&ml3,&BallLayerL2); // Move ball around
 
   detectCollisions(&ml3, &ml0, &ml1 ,&fencePaddle1, &fencePaddle2, &fieldFence);
 
