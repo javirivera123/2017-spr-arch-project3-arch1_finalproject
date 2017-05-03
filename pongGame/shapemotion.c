@@ -239,10 +239,6 @@ void main() {
 
   layerInit(&rightPadL0);
   layerDraw(&rightPadL0);
-     layerInit(&leftPadL1);
-     layerDraw(&leftPadL1);
-     layerInit(&BallLayerL2);
-     layerDraw(&BallLayerL2);
 
 
   layerGetBounds(&fieldLayerL3, &fieldFence);
@@ -283,7 +279,6 @@ void main() {
 /** Watchdog timer interrupt handler. 15 interrupts/sec */
 void wdt_c_handler() {
 
-     buzzer_init();
    static short count = 0;
    P1OUT |= GREEN_LED;              /**< Green LED on when cpu on */
 
