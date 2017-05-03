@@ -353,9 +353,22 @@ void wdt_c_handler()
 {
   static short count = 0;
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
-  count ++;
-  //if (count == 15) {
-    detectCollisions(&leftPadL1, &rightPadL0, &BallLayerL2, &ml0, &fieldFence);
+
+    if (count++ == 15)
+
+      /* Update paddle region for collisions */
+      layerGetBounds(&layer0, &fencePaddle1);
+  layerGetBounds(&layer1, &fencePaddle2);
+
+  movLayerDraw(&mlball,&layer2); // Move ball around
+
+  detectCollisions(&mlball, &ml0, &ml1 ,&fencePaddle1, &fencePaddle2, &fieldFence);
+
+
+
+
+/*
+  detectCollisions(&leftPadL1, &rightPadL0, &BallLayerL2, &ml0, &fieldFence);
     u_int sw = p2sw_read();
     buttonSense(sw, &ml1, &ml0);
 
@@ -364,5 +377,5 @@ void wdt_c_handler()
     } else {
       updateScore(2);
     }
-
+*/
 }
