@@ -154,7 +154,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
  *  \param ml The moving shape to be advanced
  *  \param fence The region which will serve as a boundary for ml
  */
-void detectCollisions( Layer *rightPadL0, Layer *leftPadL1, Layer *BallLayerL2, MovLayer *ml, Region *fence )
+void detectCollisions( MovLayer *ml, MovLayer *p1, MovLayer *p2, Region *fenceP1, Region *fenceP2, Region *fence)
 {
   Vec2 newPos;
   u_char axis;
@@ -362,7 +362,7 @@ void wdt_c_handler()
 
   movLayerDraw(&mlball,&layer2); // Move ball around
 
-  detectCollisions(&mlball, &ml0, &ml1 ,&fencePaddle1, &fencePaddle2, &fieldFence);
+  detectCollisions(&ml3, &ml0, &ml1 ,&fencePaddle1, &fencePaddle2, &fieldFence);
 
   u_int switches = p2sw_read(), i;
   for (i = 0; i < 4; i++){
