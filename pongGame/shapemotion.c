@@ -286,9 +286,6 @@ void main() {
     score1[j] = '0';
     score2[j] = '0';
 
-  drawString5x7(45, 5, "SCORE", COLOR_GOLD, COLOR_BLACK);
-  drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
-  drawString5x7(90,3,score2,COLOR_GOLD, COLOR_BLACK);
 
 
   score1[3] = 0;
@@ -296,10 +293,15 @@ void main() {
 
   for (;;) {
 
-    while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
-      P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
-      or_sr(0x10);          /**< CPU OFF */
-    }
+      layerGetBounds(&rightPadL0, &fence);
+      layerGetBounds(&leftPadL1, &fence);
+
+      movLayerDraw(&ml3, &BallLayerL3);
+
+    //while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
+     // P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
+     // or_sr(0x10);          /**< CPU OFF */
+   // }
 
     P1OUT |= GREEN_LED;       /**< Green led on when CPU on */
     redrawScreen = 0;
@@ -322,12 +324,8 @@ void buttonSense(u_int i, MovLayer *left, MovLayer *right) {
   int b3 = 2;
   int b4 = 3;
 
-
   Vec2 lPadUpdate;
   Vec2 rPadUpdate;
-
-  vec2Add(&lPadUpdate, &left->layer->posNext, &left->velocity);
-  vec2Add(&rPadUpdate, &right->layer->posNext, &right->velocity);
 
   int velocity = left->velocity.axes[1];
 
