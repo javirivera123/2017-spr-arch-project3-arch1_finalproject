@@ -385,7 +385,7 @@ void wdt_c_handler()
       }
       if(i == 3){
         ml1.velocity.axes[1] = 4;
-        movLayerDraw(&ml1,&layer1);
+        movLayerDraw(&ml1,&leftPadL1);
         mlAdvance(&ml1, &fieldFence);
         redrawScreen = 1;
       }
