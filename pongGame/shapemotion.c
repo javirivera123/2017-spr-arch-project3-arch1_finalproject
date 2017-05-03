@@ -164,15 +164,15 @@ void detectCollisions( MovLayer *ml, MovLayer *p1, MovLayer *p2, Region *fenceP1
     vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
     abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
 
-    if (((shapeBoundary.topLeft.axes[0] <= fenceP2->botRight.axes[0]) &&  //ball bouncing collisions
-         (shapeBoundary.topLeft.axes[1] > fenceP2->topLeft.axes[1]) &&
-         (shapeBoundary.topLeft.axes[1] < fenceP2->botRight.axes[1]))||
-        ((shapeBoundary.botRight.axes[0] >= fenceP1->topLeft.axes[0]) &&
-         (shapeBoundary.botRight.axes[1] > fenceP1->topLeft.axes[1]) &&
-         (shapeBoundary.botRight.axes[1] < fenceP1->botRight.axes[1]))) {
+    if (((shapeBoundary.topLeft.axes[0] <= fenceP1->botRight.axes[0]) &&  //ball bouncing collisions
+         (shapeBoundary.topLeft.axes[1] > fenceP1->topLeft.axes[1]) &&
+         (shapeBoundary.topLeft.axes[1] < fenceP1->botRight.axes[1]))||
+        ((shapeBoundary.botRight.axes[0] >= fenceP2->topLeft.axes[0]) &&
+         (shapeBoundary.botRight.axes[1] > fenceP2->topLeft.axes[1]) &&
+         (shapeBoundary.botRight.axes[1] < fenceP2->botRight.axes[1]))) {
         int velocity = ml->velocity.axes[0] = -ml->velocity.axes[0];
         newPos.axes[0] += (2*velocity);
-       }	/**< if outside of fence */
+       }
 
     //hori wall
     if((shapeBoundary.topLeft.axes[1] <= fence->topLeft.axes[1]) ||
@@ -285,7 +285,7 @@ void wdt_c_handler() {
    if (count++ == 15) {
        drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK);
 
-       drawString5x7(45,3,score1,COLOR_BLACK, COLOR_WHITE);
+       drawString5x7(50,3,score1,COLOR_BLACK, COLOR_WHITE);
 
        // Update paddle region for collisions
      layerGetBounds(&leftPadL1, &fencePaddle1);
