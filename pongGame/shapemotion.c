@@ -28,6 +28,7 @@ static char score2[3];
 
 Region fencePaddle1;            /**< Ball constraints with respect to paddle 1 */
 Region fencePaddle2;
+ int count;
 
 
 AbRect rectanglePanel = {
