@@ -317,12 +317,14 @@ void wdt_c_handler() {
 
    if (count++ == 15) {
        drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK);
+
        drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
-       drawString5x7(100,3,score2,COLOR_GREEN, COLOR_BLACK);
+
+       drawString5x7(11,3,score2,COLOR_GREEN, COLOR_BLACK);
 
        // Update paddle region for collisions
-     layerGetBounds(&leftPadL1, &fencePaddle1);
-     layerGetBounds(&rightPadL0, &fencePaddle2);
+     layerGetBounds(&leftPadL1, &fencePaddle2);
+     layerGetBounds(&rightPadL0, &fencePaddle1);
 
      movLayerDraw(&ml3, &BallLayerL2); // Move ball
 
