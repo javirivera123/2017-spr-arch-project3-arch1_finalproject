@@ -46,7 +46,7 @@ AbRectOutline fieldOutline = {	/* playing field */
          {screenWidth/2, screenHeight/2},/**< center */
          {0,0}, {0,0},				    /* last & next pos */
          COLOR_BLACK,
-         &BallLayerL2,
+         0,
  };
 
 Layer BallLayerL2 = {		/** Layer with a violet Ball */
@@ -54,7 +54,7 @@ Layer BallLayerL2 = {		/** Layer with a violet Ball */
   {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_VIOLET,
-  0,
+  &fieldLayerL3,
 };
  
 
@@ -63,7 +63,7 @@ Layer leftPadL1 = {		/**< Layer with left pad */
   {(screenWidth/2)-49, (screenHeight/2)+8}, /**< left */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &fieldLayerL3,
+  &BallLayerL2,
 };
 
 Layer rightPadL0 = {		/**< Layer with right pad */
@@ -158,9 +158,7 @@ void detectCollisions( MovLayer *ml, MovLayer *p1, MovLayer *p2, Region *fenceP1
 {
   Vec2 newPos;
   u_char axis;
-  Layer *Pad1 = rightPadL0;
-  Layer *Pad2 = leftPadL1;
-  Layer *Ball = BallLayerL2;
+
 
   Region shapeBoundary;
     vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
