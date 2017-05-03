@@ -308,8 +308,8 @@ void main() {
 
 /** Watchdog timer interrupt handler. 15 interrupts/sec */
 void wdt_c_handler() {
-   int count;
-   if (count++ == 15) {
+   //int count;
+   //if (count++ == 15) {
 
      /* Update paddle region for collisions */
      layerGetBounds(&leftPadL1, &fencePaddle1);
@@ -355,7 +355,7 @@ void wdt_c_handler() {
      }
      P1OUT &= ~GREEN_LED;    /**< Green LED off when cpu off */
    }
- }
+// }
 
 
 
