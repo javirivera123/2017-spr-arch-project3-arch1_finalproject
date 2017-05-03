@@ -285,6 +285,8 @@ void main() {
   score1[3] = 0;
   score2[3] = 0;
 
+   
+
   for (;;) {
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
       P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
@@ -364,27 +366,29 @@ void wdt_c_handler() {
      for (i = 0; i < 4; i++) {
        if (!(switches & (1 << i))) {
          if (i == 0) {
-           ml0.velocity.axes[1] = -4;
-           movLayerDraw(&ml0, &rightPadL0);
-           mlAdvance(&ml0, &fieldFence);
-           redrawScreen = 1;
-         }
-         if (i == 1) {
-           ml0.velocity.axes[1] = 4;
-           movLayerDraw(&ml0, &rightPadL0);
-           mlAdvance(&ml0, &fieldFence);
-           redrawScreen = 1;
-         }
-         if (i == 2) {
            ml1.velocity.axes[1] = -4;
            movLayerDraw(&ml1, &leftPadL1);
            mlAdvance(&ml1, &fieldFence);
            redrawScreen = 1;
          }
-         if (i == 3) {
+         if (i == 1) {
            ml1.velocity.axes[1] = 4;
            movLayerDraw(&ml1, &leftPadL1);
            mlAdvance(&ml1, &fieldFence);
+           redrawScreen = 1;
+         }
+         if (i == 2) {
+           ml0.velocity.axes[1] = -4;
+           movLayerDraw(&ml1, &leftPadL1);
+           mlAdvance(&ml1, &fieldFence);
+           movLayerDraw(&ml0, &rightPadL0);
+           mlAdvance(&ml0, &fieldFence);
+           redrawScreen = 1;
+         }
+         if (i == 3) {
+           ml0.velocity.axes[1] = 4;
+           movLayerDraw(&ml0, &rightPadL0);
+           mlAdvance(&ml0, &fieldFence);
            redrawScreen = 1;
          }
        }
