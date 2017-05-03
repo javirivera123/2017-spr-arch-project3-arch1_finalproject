@@ -367,19 +367,19 @@ void wdt_c_handler()
     if(!(switches & (1<<i))){
       if(i == 0){
         ml0.velocity.axes[1] = -4;
-        movLayerDraw(&ml0,&layer0);
+        movLayerDraw(&ml0,&rightPadL0);
         mlAdvance(&ml0, &fieldFence);
         redrawScreen = 1;
       }
       if(i == 1){
         ml0.velocity.axes[1] = 4;
-        movLayerDraw(&ml0,&layer0);
+        movLayerDraw(&ml0,&rightPadL0);
         mlAdvance(&ml0, &fieldFence);
         redrawScreen = 1;
       }
       if(i == 2){
         ml1.velocity.axes[1] = -4;
-        movLayerDraw(&ml1,&layer1);
+        movLayerDraw(&ml1,&leftPadL1);
         mlAdvance(&ml1, &fieldFence);
         redrawScreen = 1;
       }
