@@ -318,7 +318,7 @@ void wdt_c_handler() {
    if (count++ == 15) {
        drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK);
 
-       drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
+       drawString5x7(10,3,score1,COLOR_GOLD, COLOR_BLACK);
 
        drawString5x7(11,3,score2,COLOR_GREEN, COLOR_BLACK);
 
