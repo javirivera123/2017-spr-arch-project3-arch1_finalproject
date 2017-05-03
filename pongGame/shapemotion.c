@@ -364,6 +364,39 @@ void wdt_c_handler()
 
   detectCollisions(&mlball, &ml0, &ml1 ,&fencePaddle1, &fencePaddle2, &fieldFence);
 
+  u_int switches = p2sw_read(), i;
+  for (i = 0; i < 4; i++){
+    if(!(switches & (1<<i))){
+      if(i == 0){
+        ml0.velocity.axes[1] = -4;
+        movLayerDraw(&ml0,&layer0);
+        mlAdvance(&ml0, &fieldFence);
+        redrawScreen = 1;
+      }
+      if(i == 1){
+        ml0.velocity.axes[1] = 4;
+        movLayerDraw(&ml0,&layer0);
+        mlAdvance(&ml0, &fieldFence);
+        redrawScreen = 1;
+      }
+      if(i == 2){
+        ml1.velocity.axes[1] = -4;
+        movLayerDraw(&ml1,&layer1);
+        mlAdvance(&ml1, &fieldFence);
+        redrawScreen = 1;
+      }
+      if(i == 3){
+        ml1.velocity.axes[1] = 4;
+        movLayerDraw(&ml1,&layer1);
+        mlAdvance(&ml1, &fieldFence);
+        redrawScreen = 1;
+      }
+    }
+    count = 0;
+  }
+  P1OUT &= ~GREEN_LED;    /**< Green LED off when cpu off */
+}
+
 
 
 
@@ -378,4 +411,3 @@ void wdt_c_handler()
       updateScore(2);
     }
 */
-}
