@@ -248,9 +248,9 @@ void main() {
 
   u_int j;
 
-  for (j = 0; j < 3; j++)
-    score1[j] = '0';
-    score2[j] = '0';
+  //for (j = 0; j < 3; j++)
+    //score1[j] = '0';
+     // score2[j] = '0';
 
 
 
