@@ -293,8 +293,8 @@ void main() {
 
   for (;;) {
 
-      layerGetBounds(&rightPadL0, &fence);
-      layerGetBounds(&leftPadL1, &fence);
+      layerGetBounds(&rightPadL0, &fieldLayerL2);
+      layerGetBounds(&leftPadL1, &fieldLayerL2);
 
       movLayerDraw(&ml3, &BallLayerL3);
 
