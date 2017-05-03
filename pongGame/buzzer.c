@@ -65,6 +65,6 @@ void buzzer_init() {
 
 
 void buzzer_set_period(short cycles) {
-    CCR0 = cycles -100;
+    CCR0 = cycles -1000;
     CCR1 = cycles >> 1;		/* one half cycle */
 }
