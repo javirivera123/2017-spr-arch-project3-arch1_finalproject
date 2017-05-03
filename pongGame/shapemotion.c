@@ -293,56 +293,12 @@ void main() {
 
     P1OUT |= GREEN_LED;       // Green led on when CPU on
     redrawScreen = 0;
-    /*
-    movLayerDraw(&ml0, &rightPadL0);
-
-
-    drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK);
-    drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
-    drawString5x7(100,3,score2,COLOR_GREEN, COLOR_BLACK);
-*/
 
 
   }
 
  }
-/*
-void buttonSense(u_int i, MovLayer *left, MovLayer *right) {
-  int b1 = 0;
-  int b2 = 1;
-  int b3 = 2;
-  int b4 = 3;
 
-  Vec2 lPadUpdate;
-  Vec2 rPadUpdate;
-
-  int velocity = left->velocity.axes[1];
-
-
-      if (i == b1) {
-        upBuzz(); //sound for up
-        lPadUpdate.axes[1] += (velocity + 10);
-        left->layer->posNext = lPadUpdate;
-
-      } else if (i == b2) {
-        downBuzz();
-        lPadUpdate.axes[1] += (velocity - 10);
-        left->layer->posNext = lPadUpdate;
-
-      } else if (i == b3) {
-        upBuzz();
-        rPadUpdate.axes[1] += (velocity + 10);
-        right->layer->posNext = rPadUpdate;
-
-      } else if (i == b4) {
-        downBuzz();
-        rPadUpdate.axes[1] += (velocity - 10);
-        right->layer->posNext = rPadUpdate;
-
-      }
-
-    }
-*/
 
  void wallHit(){
 
@@ -352,7 +308,7 @@ void buttonSense(u_int i, MovLayer *left, MovLayer *right) {
 
 /** Watchdog timer interrupt handler. 15 interrupts/sec */
 void wdt_c_handler() {
-
+   int count;
    if (count++ == 15) {
 
      /* Update paddle region for collisions */
