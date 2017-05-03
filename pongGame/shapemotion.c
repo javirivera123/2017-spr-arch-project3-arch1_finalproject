@@ -38,7 +38,7 @@ AbRect rectanglePanel = {
 
 AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,
-  {screenWidth/2-5, screenHeight/2-5}
+  {screenWidth/2, screenHeight/2}
 };
  
  Layer fieldLayerL3 = {		/* playing field as a layer */
@@ -201,52 +201,20 @@ void detectCollisions( MovLayer *ml, MovLayer *p1, MovLayer *p2, Region *fenceP1
 
 /** Function receives an int and determines which player to update the
  *  the score for. If zero update player 1, else update player 2 */
-void scorePoint(int player){
+void scorePoint(int player) {
 
-  if (onesPlace<9 && increment > 0 ) {
-    onesPlace++;
+     if (onesPlace < 9 && increment > 0) {
+         onesPlace++;
 
-    if(player == 1){
-      score1[2] = onesPlace;
-    }
-    else{
-      score2[2] = onesPlace;
-    }
-    increment = 0;
+         if (player == 1) {
+             score1[0] = '0' + 1;
+         } else {
+             score2[2] = '0' + 1;
+         }
+         increment = 0;
 
-  }else if(increment > 0 && onesPlace == 9 && tensPlace < 9) {
-    onesPlace = 0;
-    tensPlace++;
-
-    if(player == 1){
-      score1[2] = onesPlace;
-      score1[1] = tensPlace;
-    }
-    else{
-      score2[2] = onesPlace;
-      score2[1] = tensPlace;
-    }
-    increment = 0;
-
-  }else if( onesPlace == 9 && tensPlace == 9 && hundredsPlace < 9 && increment > 0) {
-    onesPlace = 0;
-    tensPlace = 0;
-    hundredsPlace++;
-
-    if(player == 1){
-      score1[2] = onesPlace;
-      score1[1] = tensPlace;
-      score1[0] = hundredsPlace;
-    }
-    else{
-      score2[2] = onesPlace;
-      score2[1] = tensPlace;
-      score2[0] = hundredsPlace;
-    }
-    increment = 0;
-  }
-
-}
+     }
+ }
 
 
 u_int bgColor = COLOR_BLUE;     /**< The background color */
@@ -318,13 +286,11 @@ void wdt_c_handler() {
    if (count++ == 15) {
        drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK);
 
-       drawString5x7(10,3,score1,COLOR_GOLD, COLOR_BLACK);
-
-       drawString5x7(11,3,score2,COLOR_GREEN, COLOR_BLACK);
+       drawString5x7(1,3,score1,COLOR_BLACK, COLOR_WHITE);
 
        // Update paddle region for collisions
-     layerGetBounds(&leftPadL1, &fencePaddle2);
-     layerGetBounds(&rightPadL0, &fencePaddle1);
+     layerGetBounds(&leftPadL1, &fencePaddle1);
+     layerGetBounds(&rightPadL0, &fencePaddle2);
 
      movLayerDraw(&ml3, &BallLayerL2); // Move ball
 
