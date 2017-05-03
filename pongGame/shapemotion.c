@@ -296,7 +296,7 @@ void main() {
       layerGetBounds(&rightPadL0, &fieldLayerL2);
       layerGetBounds(&leftPadL1, &fieldLayerL2);
 
-      movLayerDraw(&ml3, &BallLayerL3);
+      //movLayerDraw(&ml3, &BallLayerL3);
 
     //while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
      // P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
