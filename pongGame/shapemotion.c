@@ -27,6 +27,8 @@ static int hundredsPlace = 0;
 static char score1[3];
 static char score2[3];
 
+Region fencePaddle1;            /**< Ball constraints with respect to paddle 1 */
+Region fencePaddle2;
 
 
 AbRect rectanglePanel = {
@@ -126,8 +128,26 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
       } // for col
     } // for row
   } // for moving layer being updated
-}	  
+}
 
+void mlAdvance(MovLayer *ml, Region *fence)
+{
+    Vec2 newPos;
+    u_char axis;
+    Region shapeBoundary;
+    for (; ml; ml = ml->next) {
+        vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
+        abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
+        for (axis = 0; axis < 2; axis ++) {
+            if ((shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]) ||
+                (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) ) {
+                int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+                newPos.axes[axis] += 1*velocity;
+            }	/**< if outside of fence */
+        } /**< for axis */
+        ml->layer->posNext = newPos;
+    } /**< for ml */
+}
 
 
 //Region fence = {{10,30}, {SHORT_EDGE_PIXELS-10, LONG_EDGE_PIXELS-10}}; /**< Create a fence region */
@@ -253,6 +273,7 @@ void main() {
 
   layerInit(&rightPadL0);
   layerDraw(&rightPadL0);
+
 
   layerGetBounds(&fieldLayerL2, &fieldFence);
 
