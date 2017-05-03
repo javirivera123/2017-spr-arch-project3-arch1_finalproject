@@ -366,26 +366,28 @@ void wdt_c_handler() {
      for (i = 0; i < 4; i++) {
        if (!(switches & (1 << i))) {
          if (i == 0) {
+             upBuzz();
            ml1.velocity.axes[1] = -4;
            movLayerDraw(&ml1, &leftPadL1);
            mlAdvance(&ml1, &fieldFence);
            redrawScreen = 1;
          }
          if (i == 1) {
+             downBuzz();
            ml1.velocity.axes[1] = 4;
            movLayerDraw(&ml1, &leftPadL1);
            mlAdvance(&ml1, &fieldFence);
            redrawScreen = 1;
          }
          if (i == 2) {
+             upBuzz();
            ml0.velocity.axes[1] = -4;
-           movLayerDraw(&ml1, &leftPadL1);
-           mlAdvance(&ml1, &fieldFence);
            movLayerDraw(&ml0, &rightPadL0);
            mlAdvance(&ml0, &fieldFence);
            redrawScreen = 1;
          }
          if (i == 3) {
+             downBuzz();
            ml0.velocity.axes[1] = 4;
            movLayerDraw(&ml0, &rightPadL0);
            mlAdvance(&ml0, &fieldFence);
