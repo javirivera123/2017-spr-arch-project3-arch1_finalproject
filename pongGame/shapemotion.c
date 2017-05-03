@@ -290,19 +290,20 @@ void main() {
 
   for (;;) {
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
-     // P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
-     // or_sr(0x10);          /**< CPU OFF */
-   // }
+      P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
+     or_sr(0x10);          /**< CPU OFF */
+    }
 
-    P1OUT |= GREEN_LED;       /**< Green led on when CPU on */
+    P1OUT |= GREEN_LED;       // Green led on when CPU on
     redrawScreen = 0;
+    /*
     movLayerDraw(&ml0, &rightPadL0);
 
 
     drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK);
     drawString5x7(1,3,score1,COLOR_GOLD, COLOR_BLACK);
     drawString5x7(100,3,score2,COLOR_GREEN, COLOR_BLACK);
-
+*/
 
 
   }
