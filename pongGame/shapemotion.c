@@ -204,8 +204,9 @@ void main() {
   configureClocks();
   lcd_init();
   p2sw_init(15);
-  buzzer_init();
   shapeInit();
+    buzzer_init();
+
 
   layerInit(&rightPadL0);
   layerDraw(&rightPadL0);
@@ -228,7 +229,7 @@ void main() {
   score1[3] = 0;
   score2[3] = 0;
 
-     u_int switches;
+    u_int switches;
   for (;;) {
       switches = p2sw_read();
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
@@ -238,17 +239,17 @@ void main() {
 
 
     P1OUT |= GREEN_LED;       // Green led on when CPU on
-    redrawScreen = 0;
+
 
       switchHandler(switches);
 
       drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK); //shows score
       drawString5x7(50,3,score1,COLOR_BLACK, COLOR_WHITE);
 
+      redrawScreen =0;
       movLayerDraw(&ml0, &rightPadL0); // Move ball
 
-
-  }
+  }//end for
 
  }
 
@@ -264,10 +265,12 @@ void wdt_c_handler() {
    if (count == 15) {
      mlAdvance(&ml0, &fieldFence); //detect any collisions
 
-       redrawScreen=1;
+       if (p2sw_read()){
+           redrawScreen = 1;
+       }
        count = 0;
-     P1OUT &= ~GREEN_LED;    /**< Green LED off when cpu off */
    }
+    P1OUT &= ~GREEN_LED;    /**< Green LED off when cpu off */
  }
 
 
