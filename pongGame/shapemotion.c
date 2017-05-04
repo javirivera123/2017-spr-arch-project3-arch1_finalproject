@@ -142,14 +142,16 @@ void mlAdvance(MovLayer *ml, Region *fence)
             }	/**< if outside of fence */
 
             if(shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]){
+                newPos.axes[axis] += (2*velocity);
                 hitBuzz();
-                increment = 1; //player one score
+                increment = '0'+1; //player one score
                 scorePoint(increment);
             }
 
             if(shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]){
+                newPos.axes[axis] += (2*velocity);
                 hitBuzz();
-                increment = 2; //p2 score
+                increment = '0'+2; //p2 score
                 scorePoint(increment);
 
             }
@@ -226,8 +228,6 @@ void main() {
 
 
   layerGetBounds(&fieldLayerL3, &fieldFence);
-    layerGetBounds(&leftPadL1, &ml1);
-    layerGetBounds(&rightPadL0, &ml0);
 
 
 
