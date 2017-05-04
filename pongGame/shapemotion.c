@@ -221,31 +221,30 @@ void scorePoint(int player) {
  }
 
 void switchHandler(u_int switches){
-    u_int i;
-    for (i = 0; i < 4; i++) {
-        if (!(switches & (1 << i))) {
-            if (i == 0) {
+
+        if (!(switches & (1 << 0))) {
+
                 upBuzz();
-                ml1.velocity.axes[1] = -4;
-            }
-            else if (i == 1) {
-                downBuzz();
                 ml1.velocity.axes[1] = 4;
             }
-            else if (i == 2) {
-                upBuzz();
-                ml0.velocity.axes[1] = -4;
-            }
-            else if (i == 3) {
+            else if (!(switches & (1 << 1))) {
                 downBuzz();
+                ml1.velocity.axes[1] = -4;
+            }
+            else if (!(switches & (1 << 2))) {
+                upBuzz();
                 ml0.velocity.axes[1] = 4;
+            }
+            else if (!(switches & (1 << 3))) {
+                downBuzz();
+                ml0.velocity.axes[1] = -4;
             }
             else{
                 ml0.velocity.axes[1] = 0;
                 ml1.velocity.axes[1] = 0;
             }
         }
-    }
+
 }
 
 
