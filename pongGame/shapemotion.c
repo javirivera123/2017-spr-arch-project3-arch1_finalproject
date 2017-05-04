@@ -308,8 +308,8 @@ void wdt_c_handler() {
              downBuzz();
            ml0.velocity.axes[1] = 4;
          }
-           movLayerDraw(&ml0, &rightPadL0); //only called once at end
        }
+         redrawScreen=1;
        count = 0;
      }
      P1OUT &= ~GREEN_LED;    /**< Green LED off when cpu off */
