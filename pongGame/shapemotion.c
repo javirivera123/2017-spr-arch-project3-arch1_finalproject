@@ -226,8 +226,8 @@ void main() {
 
 
   layerGetBounds(&fieldLayerL3, &fieldFence);
-    layerGetBounds(&leftPadL1, &fieldFence);
-    layerGetBounds(&rightPadL0, &fieldFence);
+    layerGetBounds(&leftPadL1, &ml1);
+    layerGetBounds(&rightPadL0, &ml0);
 
 
 
