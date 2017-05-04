@@ -63,7 +63,13 @@ void buzzer_init() {
         buzzer_set_period(period ^ 1000);
     }
 
-
+/*
+set_period: mov r12, &CCR0
+            mov &CCRO, r14
+            rrc r14
+            mov r14 &CCR1
+            RET
+*/
 void buzzer_set_period(short cycles) {
     CCR0 = cycles -1000;
     CCR1 = cycles >> 1;		/* one half cycle */

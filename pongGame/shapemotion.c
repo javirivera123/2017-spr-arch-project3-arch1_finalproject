@@ -248,9 +248,9 @@ void main() {
 
   u_int j;
 
-  //for (j = 0; j < 3; j++)
-    //score1[j] = '0';
-     // score2[j] = '0';
+  for (j = 0; j < 3; j++) //fill in 000 for score
+    score1[j] = '0';
+     score2[j] = '0';
 
 
 
@@ -283,7 +283,7 @@ void wdt_c_handler() {
    P1OUT |= GREEN_LED;              /**< Green LED on when cpu on */
 
    if (count++ == 15) {
-       drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK);
+       drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK); //shows score
 
        drawString5x7(50,3,score1,COLOR_BLACK, COLOR_WHITE);
 
@@ -295,7 +295,7 @@ void wdt_c_handler() {
 
      detectCollisions(&ml3, &ml0, &ml1, &fencePaddle1, &fencePaddle2, &fieldFence); //detect any collisions
 
-     u_int switches = p2sw_read(), i;
+     u_int switches = p2sw_read(), i;  //button detection
      for (i = 0; i < 4; i++) {
        if (!(switches & (1 << i))) {
          if (i == 0) {
