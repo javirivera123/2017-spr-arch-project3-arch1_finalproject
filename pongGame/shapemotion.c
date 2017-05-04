@@ -140,6 +140,20 @@ void mlAdvance(MovLayer *ml, Region *fence)
                 int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                 newPos.axes[axis] += (2*velocity);
             }	/**< if outside of fence */
+
+            if(shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]){
+                hitBuzz();
+                increment = 1; //player one score
+                scorePoint(increment);
+            }
+
+            if(shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]){
+                hitBuzz();
+                increment = 2; //p2 score
+                scorePoint(increment);
+
+            }
+
         } /**< for axis */
         ml->layer->posNext = newPos;
     } /**< for ml */
