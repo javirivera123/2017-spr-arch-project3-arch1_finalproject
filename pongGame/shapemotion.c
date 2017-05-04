@@ -218,6 +218,7 @@ void main() {
 
 
   layerGetBounds(&fieldLayerL3, &fieldFence);
+     layerGetBounds(&BallLayerL2, &fieldFence);
 
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);                  /**< GIE (enable interrupts) */
