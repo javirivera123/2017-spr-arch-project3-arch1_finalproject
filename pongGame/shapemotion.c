@@ -245,7 +245,7 @@ void switchHandler(u_int switches){
             }
         }
 
-}
+
 
 
 /** Initializes everything, enables interrupts and green LED,
