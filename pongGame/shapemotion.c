@@ -226,6 +226,9 @@ void main() {
 
 
   layerGetBounds(&fieldLayerL3, &fieldFence);
+    layerGetBounds(&leftPadL1, &fieldFence);
+    layerGetBounds(&rightPadL0, &fieldFence);
+
 
 
   enableWDTInterrupts();      /**< enable periodic interrupt */
