@@ -29,10 +29,9 @@ AbRect rectanglePanel = {
 };
 
 
-
 AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,
-  {screenWidth/2, screenHeight/2}
+  {screenWidth/2-10, screenHeight/2-10}
 };
 
  Layer BallLayerL2 = {		/** Layer with a violet Ball */
