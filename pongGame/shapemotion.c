@@ -62,7 +62,7 @@ Layer leftPadL1 = {		/**< Layer with left pad */
   {(screenWidth/2)-49, (screenHeight/2)+8}, /**< left */
   {0,0}, {0,0},				    /* last & next pos */
   COLOR_BLACK,
-  &BallLayerL2,
+  &fieldLayerL3,
 };
 
 Layer rightPadL0 = {		/**< Layer with right pad */
@@ -218,7 +218,7 @@ void main() {
 
 
   layerGetBounds(&fieldLayerL3, &fieldFence);
-     layerGetBounds(&BallLayerL2, &fieldFence);
+
 
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);                  /**< GIE (enable interrupts) */
