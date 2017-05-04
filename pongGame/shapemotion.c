@@ -83,7 +83,7 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml3 = { &BallLayerL2, {-1,2}, 0 };//layer for ball
+MovLayer ml3 = { &BallLayerL2, {1,1}, 0 };//layer for ball
 MovLayer ml1 = { &leftPadL1, {0,1}, &ml3 };//left paddle
 MovLayer ml0 = { &rightPadL0, {0,1}, &ml1 };//right paddle
 
@@ -126,7 +126,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
   } // for moving layer being updated
 }
 
-//Region fence = {{10,30}, {SHORT_EDGE_PIXELS-10, LONG_EDGE_PIXELS-10}}; /**< Create a fence region */
+Region fence = {{10,30}, {SHORT_EDGE_PIXELS-10, LONG_EDGE_PIXELS-10}}; /**< Create a fence region */
 
 /** Advances a moving shape within a fence
  *
@@ -144,9 +144,11 @@ void mlAdvance( MovLayer *ml, Region *fence)
         for (axis = 0; axis < 2; axis ++) {
             
             if ((shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]) ||
-                (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) ) {
+                (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) ){
+
                 int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                 newPos.axes[axis] += (2*velocity);
+
             }	/**< if outside of fence */
         } /**< for axis */
         ml->layer->posNext = newPos;
