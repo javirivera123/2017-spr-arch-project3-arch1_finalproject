@@ -41,22 +41,21 @@ AbRectOutline fieldOutline = {	/* playing field */
   abRectOutlineGetBounds, abRectOutlineCheck,
   {screenWidth/2, screenHeight/2}
 };
- 
+
+ Layer BallLayerL2 = {		/** Layer with a violet Ball */
+         (AbShape *) &circle8,
+         {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
+         {0,0}, {0,0},				    /* last & next pos */
+         COLOR_VIOLET,
+         0,
+ };
  Layer fieldLayerL3 = {		/* playing field as a layer */
          (AbShape *) &fieldOutline,
          {screenWidth/2, screenHeight/2},/**< center */
          {0,0}, {0,0},				    /* last & next pos */
          COLOR_BLACK,
-         0,
+         &BallLayerL2,
  };
-
-Layer BallLayerL2 = {		/** Layer with a violet Ball */
-  (AbShape *) &circle8,
-  {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
-  {0,0}, {0,0},				    /* last & next pos */
-  COLOR_VIOLET,
-  &fieldLayerL3,
-};
  
 
 Layer leftPadL1 = {		/**< Layer with left pad */
@@ -85,7 +84,7 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml3 = { &BallLayerL2, {-1,2}, 0 };//layer for ball
+MovLayer ml3 = { &BallLayerL2, {1,1}, 0 };//layer for ball
 MovLayer ml1 = { &leftPadL1, {0,1}, &ml3 };//left paddle
 MovLayer ml0 = { &rightPadL0, {0,1}, &ml1 };//right paddle
 
@@ -157,51 +156,6 @@ void mlAdvance( MovLayer *ml, Region *fence)
     
     
     
-    
-/*    ////////////
-  Vec2 newPos;
-  u_char axis;
-
-
-  Region shapeBoundary;
-    vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
-    abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
-
-    if (((shapeBoundary.topLeft.axes[0] <= fenceP1->botRight.axes[0]) &&  //ball bouncing collisions
-         (shapeBoundary.topLeft.axes[1] > fenceP1->topLeft.axes[1]) &&
-         (shapeBoundary.topLeft.axes[1] < fenceP1->botRight.axes[1]))||
-        ((shapeBoundary.botRight.axes[0] >= fenceP2->topLeft.axes[0]) &&
-         (shapeBoundary.botRight.axes[1] > fenceP2->topLeft.axes[1]) &&
-         (shapeBoundary.botRight.axes[1] < fenceP2->botRight.axes[1]))) {
-        int velocity = ml->velocity.axes[0] = -ml->velocity.axes[0];
-        newPos.axes[0] += (2*velocity);
-       }
-
-    //hori wall
-    if((shapeBoundary.topLeft.axes[1] <= fence->topLeft.axes[1]) ||
-       (shapeBoundary.botRight.axes[1] >= fence->botRight.axes[1])){
-          int velocity = ml->velocity.axes[1] = -ml->velocity.axes[1];
-           newPos.axes[1] += (2*velocity);
-    }
-
-// Manages collisions between ball and vertical walls
-    if(shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]){
-        hitBuzz();
-        increment = 1; //player one score
-        scorePoint(increment);
-    }
-
-    if(shapeBoundary.botRight.axes[0] > fence->botRight.axes[0]){
-        hitBuzz();
-        increment = 2; //p2 score
-        scorePoint(increment);
-
-    }
-
-    ml->layer->posNext = newPos; // UPDATE POSNEXT
-
-}
-*/
 
 
 //score point func
