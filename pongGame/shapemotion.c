@@ -28,7 +28,6 @@ static char score2[3];
  u_int bgColor = COLOR_BLUE;     /**< The background color */
  int redrawScreen = 1;           /**< Boolean for whether screen needs to be redrawn */
 
- Region fieldFence;		/**< fence around playing field  */
 
 
 AbRect rectanglePanel = {
@@ -199,8 +198,7 @@ void switchHandler(u_int switches){
             }
         }
 
-
-
+ Region fieldFence;		/**< fence around playing field  */
 
 /** Initializes everything, enables interrupts and green LED,
  *  and handles the rendering for the screen
@@ -211,7 +209,6 @@ void main() {
 
   configureClocks();
   lcd_init();
-  shapeInit();
   p2sw_init(15);
   buzzer_init();
   shapeInit();
