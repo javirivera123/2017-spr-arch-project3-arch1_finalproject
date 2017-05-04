@@ -26,7 +26,7 @@ static int hundredsPlace = 0;
 static char score1[3];
 static char score2[3];
  u_int bgColor = COLOR_BLUE;     /**< The background color */
- int redrawScreen = 1;           /**< Boolean for whether screen needs to be redrawn */
+
 
 
 
