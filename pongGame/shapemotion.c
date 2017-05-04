@@ -158,17 +158,17 @@ void mlAdvance(MovLayer *ml, Region *fence)
                 newPos.axes[axis] += (2*velocity);
             }	/**< if outside of fence */
 
-            if(shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]){
-               // int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-               // newPos.axes[axis] += (2*velocity);
+            if(shapeBoundary.topLeft.axes[axis] < ml0->topLeft.axes[axis]){
+                int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+                newPos.axes[axis] += (2*velocity);
                 hitBuzz();
                 increment = '0'+1; //player one score
                 scorePoint(increment);
             }
 
-            if(shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]){
-                //int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-               // newPos.axes[axis] += (2*velocity);
+            if(shapeBoundary.botRight.axes[axis] > ml1->botRight.axes[axis]){
+                int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+                newPos.axes[axis] += (2*velocity);
                 hitBuzz();
                 increment = '0'+2; //p2 score
                 scorePoint(increment);
