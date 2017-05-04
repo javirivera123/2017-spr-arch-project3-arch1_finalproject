@@ -42,7 +42,7 @@ AbRectOutline fieldOutline = {	/* playing field */
 };
 
  Layer BallLayerL2 = {		/** Layer with a violet Ball */
-         (AbShape *) &circle8,
+         (AbShape *)&circle8,
          {(screenWidth/2)+10, (screenHeight/2)+5}, /**< bit below & right of center */
          {0,0}, {0,0},				    /* last & next pos */
          COLOR_VIOLET,
@@ -84,8 +84,8 @@ typedef struct MovLayer_s {
 } MovLayer;
 
 MovLayer ml3 = { &BallLayerL2, {1,1}, 0 };//layer for ball
-MovLayer ml1 = { &leftPadL1, {0,1}, &ml3 };//left paddle
-MovLayer ml0 = { &rightPadL0, {0,1}, &ml1 };//right paddle
+MovLayer ml1 = { &leftPadL1, {1,2}, &ml3 };//left paddle
+MovLayer ml0 = { &rightPadL0, {2,1}, &ml1 };//right paddle
 
 
 //moves layers in game
@@ -199,7 +199,7 @@ void switchHandler(u_int switches){
         }
 
  Region fieldFence;		/**< fence around playing field  */
-
+ int redrawScreen = 1;           /**< Boolean for whether screen needs to be redrawn */
 /** Initializes everything, enables interrupts and green LED,
  *  and handles the rendering for the screen
  */
@@ -248,8 +248,8 @@ void main() {
       switchHandler(switches);
 
       drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK); //shows score
-
       drawString5x7(50,3,score1,COLOR_BLACK, COLOR_WHITE);
+
       movLayerDraw(&ml0, &rightPadL0); // Move ball
 
 
@@ -265,8 +265,8 @@ void wdt_c_handler() {
 
    static short count = 0;
    P1OUT |= GREEN_LED;              /**< Green LED on when cpu on */
-
-   if (count++ == 15) {
+   count++;
+   if (count == 15) {
      mlAdvance(&ml0, &fieldFence); //detect any collisions
 
        redrawScreen=1;
