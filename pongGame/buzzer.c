@@ -1,4 +1,5 @@
 #include <msp430.h>
+// .arch msp430
 #include "buzzer.h"
 
 static unsigned int period = 1000;
@@ -10,6 +11,8 @@ static signed int rate = 200;
 #define PORT2_CONFIGURE P2SEL2
 #define P2_PIN_BEHAVIOR P2SEL
 #define P2_INPUT_OUTPUT P2DIR
+
+
 
 void buzzer_init() {
 
@@ -64,7 +67,7 @@ void buzzer_init() {
     }
 
 /*
-set_period: mov r12, &CCR0
+buzzer_set_period: mov r12, &CCR0
             mov &CCRO, r14
             rrc r14
             mov r14 &CCR1
