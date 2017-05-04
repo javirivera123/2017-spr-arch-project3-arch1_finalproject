@@ -119,6 +119,23 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
   } // for moving layer being updated
 }
 
+//score point func
+void scorePoint(int player) {
+
+    if (onesPlace < 9 && increment > 0) {
+        onesPlace++;
+
+        if (player == 1) {
+            score1[0] = '0' + 1;
+        } else {
+            score2[2] = '0' + 1;
+        }
+        increment = 0;
+
+    }
+}
+
+
 //Region fence = {{10,30}, {SHORT_EDGE_PIXELS-10, LONG_EDGE_PIXELS-10}}; /**< Create a fence region */
 
 /** Advances a moving shape within a fence
@@ -164,22 +181,6 @@ void mlAdvance(MovLayer *ml, Region *fence)
 
 
 
-
- //score point func
-void scorePoint(int player) {
-
-     if (onesPlace < 9 && increment > 0) {
-         onesPlace++;
-
-         if (player == 1) {
-             score1[0] = '0' + 1;
-         } else {
-             score2[2] = '0' + 1;
-         }
-         increment = 0;
-
-     }
- }
 
 void switchHandler(u_int switches){
 
