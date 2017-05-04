@@ -85,8 +85,8 @@ typedef struct MovLayer_s {
 } MovLayer;
 
 MovLayer ml3 = { &BallLayerL2, {-1,2}, 0 };//layer for ball
-MovLayer ml1 = { &leftPadL1, {0,1}, &BallLayerL2 };//left paddle
-MovLayer ml0 = { &rightPadL0, {0,1}, &leftPadL1 };//right paddle
+MovLayer ml1 = { &leftPadL1, {0,1}, &ml3 };//left paddle
+MovLayer ml0 = { &rightPadL0, {0,1}, &ml1 };//right paddle
 
 
 //moves layers in game
