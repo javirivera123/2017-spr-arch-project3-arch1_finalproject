@@ -295,22 +295,18 @@ void wdt_c_handler() {
          if (i == 0) {
              upBuzz();
            ml1.velocity.axes[1] = -4;
-           mlAdvance(&ml1, &fieldFence);
          }
          if (i == 1) {
              downBuzz();
            ml1.velocity.axes[1] = 4;
-           mlAdvance(&ml1, &fieldFence);
          }
          if (i == 2) {
              upBuzz();
            ml0.velocity.axes[1] = -4;
-           mlAdvance(&ml0, &fieldFence);
          }
          if (i == 3) {
              downBuzz();
            ml0.velocity.axes[1] = 4;
-           mlAdvance(&ml0, &fieldFence);
          }
            movLayerDraw(&ml0, &rightPadL0); //only called once at end
        }
