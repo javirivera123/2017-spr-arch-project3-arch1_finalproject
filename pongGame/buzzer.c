@@ -1,6 +1,6 @@
 #include <msp430.h>
-// .arch msp430
 #include "buzzer.h"
+#inlude <libTimer.h>
 
 static unsigned int period = 1000;
 static signed int rate = 200;

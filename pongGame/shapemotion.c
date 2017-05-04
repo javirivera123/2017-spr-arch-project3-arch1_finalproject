@@ -154,8 +154,30 @@ void mlAdvance(MovLayer *ml, Region *fence)
  *  \param ml The moving shape to be advanced
  *  \param fence The region which will serve as a boundary for ml
  */
-void detectCollisions( MovLayer *ml, MovLayer *p1, MovLayer *p2, Region *fenceP1, Region *fenceP2, Region *fence)
+void mlAdvance( MovLayer *ml, Region *fence)
 {
+    Vec2 newPos;
+    u_char axis;
+    Region shapeBoundary;
+    for (; ml; ml = ml->next) {
+        vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
+        abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
+        for (axis = 0; axis < 2; axis ++) {
+            
+            if ((shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]) ||
+                (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) ) {
+                int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+                newPos.axes[axis] += (2*velocity);
+            }	/**< if outside of fence */
+        } /**< for axis */
+        ml->layer->posNext = newPos;
+    } /**< for ml */
+}
+    
+    
+    
+    
+/*    ////////////
   Vec2 newPos;
   u_char axis;
 
@@ -181,7 +203,7 @@ void detectCollisions( MovLayer *ml, MovLayer *p1, MovLayer *p2, Region *fenceP1
            newPos.axes[1] += (2*velocity);
     }
 
-/* Manages collisions between ball and vertical walls */
+// Manages collisions between ball and vertical walls
     if(shapeBoundary.topLeft.axes[0] < fence->topLeft.axes[0]){
         hitBuzz();
         increment = 1; //player one score
@@ -198,9 +220,10 @@ void detectCollisions( MovLayer *ml, MovLayer *p1, MovLayer *p2, Region *fenceP1
     ml->layer->posNext = newPos; // UPDATE POSNEXT
 
 }
+*/
 
-/** Function receives an int and determines which player to update the
- *  the score for. If zero update player 1, else update player 2 */
+
+//score point func
 void scorePoint(int player) {
 
      if (onesPlace < 9 && increment > 0) {
@@ -239,7 +262,8 @@ void main() {
 
   layerInit(&rightPadL0);
   layerDraw(&rightPadL0);
-
+     
+     movLayerDraw(&ml0, &rightPadL0); // Move ball
 
   layerGetBounds(&fieldLayerL3, &fieldFence);
 
@@ -287,13 +311,7 @@ void wdt_c_handler() {
 
        drawString5x7(50,3,score1,COLOR_BLACK, COLOR_WHITE);
 
-       // Update paddle region for collisions
-     layerGetBounds(&leftPadL1, &fencePaddle1);
-     layerGetBounds(&rightPadL0, &fencePaddle2);
-
-     movLayerDraw(&ml3, &BallLayerL2); // Move ball
-
-     detectCollisions(&ml3, &ml0, &ml1, &fencePaddle1, &fencePaddle2, &fieldFence); //detect any collisions
+     mlAdvance(&ml0, &fieldFence); //detect any collisions
 
      u_int switches = p2sw_read(), i;  //button detection
      for (i = 0; i < 4; i++) {
@@ -301,31 +319,24 @@ void wdt_c_handler() {
          if (i == 0) {
              upBuzz();
            ml1.velocity.axes[1] = -4;
-           movLayerDraw(&ml1, &leftPadL1);
            mlAdvance(&ml1, &fieldFence);
-           redrawScreen = 1;
          }
          if (i == 1) {
              downBuzz();
            ml1.velocity.axes[1] = 4;
-           movLayerDraw(&ml1, &leftPadL1);
            mlAdvance(&ml1, &fieldFence);
-           redrawScreen = 1;
          }
          if (i == 2) {
              upBuzz();
            ml0.velocity.axes[1] = -4;
-           movLayerDraw(&ml0, &rightPadL0);
            mlAdvance(&ml0, &fieldFence);
-           redrawScreen = 1;
          }
          if (i == 3) {
              downBuzz();
            ml0.velocity.axes[1] = 4;
-           movLayerDraw(&ml0, &rightPadL0);
            mlAdvance(&ml0, &fieldFence);
-           redrawScreen = 1;
          }
+           movLayerDraw(&ml0, &rightPadL0); //only called once at end
        }
        count = 0;
      }
