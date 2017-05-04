@@ -25,9 +25,10 @@ static int hundredsPlace = 0;
 //definitions for score
 static char score1[3];
 static char score2[3];
+ u_int bgColor = COLOR_BLUE;     /**< The background color */
+ int redrawScreen = 1;           /**< Boolean for whether screen needs to be redrawn */
 
-Region fencePaddle1;            /**< Ball constraints with respect to paddle 1 */
-Region fencePaddle2;
+ Region fieldFence;		/**< fence around playing field  */
 
 
 AbRect rectanglePanel = {
@@ -240,10 +241,6 @@ void scorePoint(int player) {
  }
 
 
-u_int bgColor = COLOR_BLUE;     /**< The background color */
-int redrawScreen = 1;           /**< Boolean for whether screen needs to be redrawn */
-
-Region fieldFence;		/**< fence around playing field  */
 
 
 /** Initializes everything, enables interrupts and green LED,
