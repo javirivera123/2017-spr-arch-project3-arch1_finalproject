@@ -221,6 +221,7 @@ void scorePoint(int player) {
  }
 
 void switchHandler(u_int switches){
+    u_int i;
     for (i = 0; i < 4; i++) {
         if (!(switches & (1 << i))) {
             if (i == 0) {
