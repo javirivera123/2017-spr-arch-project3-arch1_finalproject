@@ -220,7 +220,32 @@ void scorePoint(int player) {
      }
  }
 
-
+void switchHandler(u_int switches){
+    for (i = 0; i < 4; i++) {
+        if (!(switches & (1 << i))) {
+            if (i == 0) {
+                upBuzz();
+                ml1.velocity.axes[1] = -4;
+            }
+            else if (i == 1) {
+                downBuzz();
+                ml1.velocity.axes[1] = 4;
+            }
+            else if (i == 2) {
+                upBuzz();
+                ml0.velocity.axes[1] = -4;
+            }
+            else if (i == 3) {
+                downBuzz();
+                ml0.velocity.axes[1] = 4;
+            }
+            else{
+                ml0.velocity.axes[1] = 0;
+                ml1.velocity.axes[1] = 0;
+            }
+        }
+    }
+}
 
 
 /** Initializes everything, enables interrupts and green LED,
@@ -248,31 +273,39 @@ void main() {
 
   u_int j;
 
-  for (j = 0; j < 3; j++) //fill in 000 for score
-    score1[j] = '0';
-     score2[j] = '0';
-
+  for (j = 0; j < 3; j++) {//fill in 000 for score
+      score1[j] = '0';
+      score2[j] = '0';
+  }
 
 
   score1[3] = 0;
   score2[3] = 0;
 
-   
-
+     u_int switches;
   for (;;) {
+      switches = p2sw_read();
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
       P1OUT &= ~GREEN_LED;    /**< Green led off witHo CPU */
      or_sr(0x10);          /**< CPU OFF */
     }
 
+
     P1OUT |= GREEN_LED;       // Green led on when CPU on
     redrawScreen = 0;
+
+      switchHandler(switches);
+
+      drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK); //shows score
+
+      drawString5x7(50,3,score1,COLOR_BLACK, COLOR_WHITE);
       movLayerDraw(&ml0, &rightPadL0); // Move ball
 
 
   }
 
  }
+
 
 
 
@@ -283,35 +316,10 @@ void wdt_c_handler() {
    P1OUT |= GREEN_LED;              /**< Green LED on when cpu on */
 
    if (count++ == 15) {
-       drawString5x7(45, 0, "SCORE", COLOR_GOLD, COLOR_BLACK); //shows score
-
-       drawString5x7(50,3,score1,COLOR_BLACK, COLOR_WHITE);
-
      mlAdvance(&ml0, &fieldFence); //detect any collisions
 
-     u_int switches = p2sw_read(), i;  //button detection
-     for (i = 0; i < 4; i++) {
-       if (!(switches & (1 << i))) {
-         if (i == 0) {
-             upBuzz();
-           ml1.velocity.axes[1] = -4;
-         }
-         if (i == 1) {
-             downBuzz();
-           ml1.velocity.axes[1] = 4;
-         }
-         if (i == 2) {
-             upBuzz();
-           ml0.velocity.axes[1] = -4;
-         }
-         if (i == 3) {
-             downBuzz();
-           ml0.velocity.axes[1] = 4;
-         }
-       }
-         redrawScreen=1;
+       redrawScreen=1;
        count = 0;
-     }
      P1OUT &= ~GREEN_LED;    /**< Green LED off when cpu off */
    }
  }
