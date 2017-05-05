@@ -132,8 +132,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
 	Vec2 pixelPos = {col, row};
 	u_int color = bgColor;
 	Layer *probeLayer;
-	for (probeLayer = layers; probeLayer; 
-	     probeLayer = probeLayer->next) { /* probe all layers, in order */
+	for (probeLayer = layers; probeLayer;probeLayer = probeLayer->next) { /* probe all layers, in order */
 	  if (abShapeCheck(probeLayer->abShape, &probeLayer->pos, &pixelPos)) {
 	    color = probeLayer->color;
 	    break; 
