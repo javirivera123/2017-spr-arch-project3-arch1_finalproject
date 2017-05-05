@@ -164,7 +164,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
                 scorePoint(increment);
             }
 
-            if (abRectCheck(ml1.layer->abShape, &ml1.layer->posNext, &newPos)) {
+            if ( abRectCheck(ml1.layer->abShape, &ml1.layer->posNext, &newPos) ) {
                  int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                 newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
