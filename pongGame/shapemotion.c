@@ -5,9 +5,9 @@
 #include <lcdutils.h>
 #include <lcddraw.h>
 #include <p2switches.h>
-#include "shape.h"
+#include <shape.h>
 #include <abCircle.h>
-#include "buzzer.h"cd
+#include "buzzer.h"
 
 #define GREEN_LED BIT6
 #define WIDTH 2
@@ -20,7 +20,7 @@ static int hundredsPlace = 0;
 static char score1[3];
 static char score2[3];
  u_int bgColor = COLOR_BLUE;     /**< The background color */
-shapeInit();
+
 
 
 
@@ -161,7 +161,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
 
             if (ml->layer->abShape == ml3.layer->abShape) {
 
-            if ( abShapeCheck(ml0->layer->abShape, rightPadL0.layer->posNext, &newPos) ) {
+            if ( abShapeCheck(rightPadL0.layer->abShape, rightPadL0.layer->posNext, &newPos) ) {
                 int velocity = ml3.velocity.axes[axis] = -ml3.velocity.axes[axis];
                 newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
@@ -226,6 +226,7 @@ void main() {
   configureClocks();
   lcd_init();
   p2sw_init(15);
+    shapeInit();
     buzzer_init();
 
 
