@@ -169,7 +169,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
             }
 
             if (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) {
-                int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+                 int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                 newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
                 increment = '0' + 2; //p2 score
