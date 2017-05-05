@@ -153,27 +153,30 @@ void mlAdvance(MovLayer *ml, Region *fence)
         abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
         for (axis = 0; axis < 2; axis ++) {
             if ((shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]) ||
-                (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) ) {
+                (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis])) {
                 int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-                newPos.axes[axis] += (2*velocity);
-            }	/**< if outside of fence */
+                newPos.axes[axis] += (2 * velocity);
+            }    /**< if outside of fence */
 
-            if(shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]){
-                int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-                newPos.axes[axis] += (2*velocity);
+            if (ml->layer->abShape == ml3.layer->abShape) {
+
+            if (abShape(ml0->layer->abShape, &ml0->layer->posNext, &newPos)) {
+                int velocity = ml3.velocity.axes[axis] = -ml3.velocity.axes[axis];
+                newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
-                increment = '0'+1; //player one score
+                increment = '0' + 1; //player one score
                 scorePoint(increment);
             }
 
-            if(shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]){
+            if (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) {
                 int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-                newPos.axes[axis] += (2*velocity);
+                newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
-                increment = '0'+2; //p2 score
+                increment = '0' + 2; //p2 score
                 scorePoint(increment);
 
             }
+        }
 
         } /**< for axis */
         ml->layer->posNext = newPos;
