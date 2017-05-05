@@ -39,6 +39,22 @@ add #100, &period
 move 0(r1), r12
 call #buzzer_set_period()
 
+downBuzz:
+add #100, &period
+move 0(r1), r12
+call #buzzer_set_period()
+
+hitBuzz:
+add #100, &period
+move 0(r1), r12
+call #buzzer_set_period()
+
+loseBuzz:
+add #100, &period
+move 0(r1), r12
+call #buzzer_set_period()
+
+
 
 
 
