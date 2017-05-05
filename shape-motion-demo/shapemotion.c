@@ -7,6 +7,7 @@
  *  is turned off along with the green LED.
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <msp430.h>
 #include <libTimer.h>
 #include <lcdutils.h>
