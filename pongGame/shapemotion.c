@@ -154,7 +154,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
         abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
         for (axis = 0; axis < 2; axis ++) {
 
-            //if (ml->layer->abShape == ml3.layer->abShape) {
+            if (ml->layer->abShape == ml3.layer->abShape) {
 
                 if (abShapeCheck(ml0.layer->abShape, &ml0.layer->posNext, &newPos)) {
                     int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
@@ -172,7 +172,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
                     increment = '0' + 2; //p2 score
                     scorePoint(increment);
                 }
-            //}
+            }
 
               if ((shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]) ||
                 (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis])) {
