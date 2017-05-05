@@ -153,7 +153,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
         vec2Add(&newPos, &ml->layer->posNext, &ml->velocity);
         abShapeGetBounds(ml->layer->abShape, &newPos, &shapeBoundary);
         for (axis = 0; axis < 2; axis ++) {
-/*
+
             if (ml->layer->abShape == ml3.layer->abShape) {
 
             if ( abRectCheck(ml0.layer->abShape, &ml0.layer->posNext, &newPos) ) {
@@ -164,7 +164,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
                 scorePoint(increment);
             }
 
-            if (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) {
+            if (abRectCheck(ml1.layer->abShape, &ml1.layer->posNext, &newPos)) {
                  int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                 newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
@@ -173,8 +173,8 @@ void mlAdvance(MovLayer *ml, Region *fence)
 
             }
         }
-*/
-             if ((shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]) ||
+
+             else if ((shapeBoundary.topLeft.axes[axis] < fence->topLeft.axes[axis]) ||
                 (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis])) {
                 int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                 newPos.axes[axis] += (2 * velocity);
