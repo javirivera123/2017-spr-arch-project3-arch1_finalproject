@@ -156,7 +156,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
 
             if (ml->layer->abShape == ml3.layer->abShape) {
 
-                if (abShapeCheck(ml0.layer->abShape, rightPadL0.pos.axes[axis], &newPos)) {
+                if (abShapeCheck(ml0.layer->abShape, rightPadL0.pos.axes[axis], BallLayerL2.axes[axis])) {
                     int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                     newPos.axes[axis] += (2 * velocity);
                     hitBuzz();
@@ -165,7 +165,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
                 }
 
 
-                else if (abShapeCheck(ml1.layer->abShape, leftPadL1.pos.axes[axis], &newPos)) {
+                 if (abShapeCheck(ml1.layer->abShape, leftPadL1.pos.axes[axis], BallLayerL2.axes[axis])) {
                     int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                     newPos.axes[axis] += (2 * velocity);
                     hitBuzz();
