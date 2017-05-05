@@ -31,38 +31,18 @@ void buzzer_init() {
 
 }
     void upBuzz() {
-        if ((rate > 0 && (period > MAX_PERIOD)) ||
-            (rate < 0 && (period < MIN_PERIOD))) {
-            rate = -rate;
-            period += (rate << 1);
-        }
         buzzer_set_period(period ^ 1000);
     }
 
     void downBuzz() {
-        if ((rate > 0 && (period > MAX_PERIOD)) ||
-            (rate < 0 && (period < MIN_PERIOD))) {
-            rate = -rate;
-            period += (rate << 1);
-        }
         buzzer_set_period(period ^ 1000);
     }
 
     void hitBuzz() {
-        if ((rate > 0 && (period > MAX_PERIOD)) ||
-            (rate < 0 && (period < MIN_PERIOD))) {
-            rate = -rate;
-            period += (rate << 1);
-        }
         buzzer_set_period(period ^ 1000);
     }
 
     void loseBuzz() {
-        if ((rate > 0 && (period > MAX_PERIOD)) ||
-            (rate < 0 && (period < MIN_PERIOD))) {
-            rate = -rate;
-            period += (rate << 1);
-        }
         buzzer_set_period(period ^ 1000);
     }
 

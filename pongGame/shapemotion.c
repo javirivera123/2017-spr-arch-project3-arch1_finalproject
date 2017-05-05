@@ -5,7 +5,7 @@
 #include <lcdutils.h>
 #include <lcddraw.h>
 #include <p2switches.h>
-#include <shape.h>
+#include "shape.h"
 #include <abCircle.h>
 #include "buzzer.h"
 
@@ -160,7 +160,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
 
             if (ml->layer->abShape == ml3.layer->abShape) {
 
-            if ( abShape(rightPadL0.layer->abShape, rightPadL0.layer->posNext, &newPos) ) {
+            if ( abShape(ml0->layer->abShape, rightPadL0.layer->posNext, &newPos) ) {
                 int velocity = ml3.velocity.axes[axis] = -ml3.velocity.axes[axis];
                 newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
