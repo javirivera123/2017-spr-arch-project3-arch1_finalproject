@@ -156,7 +156,7 @@ void mlAdvance(MovLayer *ml, Region *fence)
 
             if (ml->layer->abShape == ml3.layer->abShape) {
 
-                if ( ml0.layer.pos.axes[axis] < ml3.layer.pos.axes[axis]) {
+                if ( rightPadL0.layer.pos.axes[axis] < BallLayerL2.layer.pos.axes[axis]) {
                     int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                     newPos.axes[axis] += (2 * velocity);
                     hitBuzz();
