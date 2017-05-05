@@ -161,15 +161,15 @@ void mlAdvance(MovLayer *ml, Region *fence)
 
             if (ml->layer->abShape == ml3.layer->abShape) {
 
-            if ( abShapeCheck(ml0.layer->abShape, &ml0.layer->posNext, &newPos) ) {
+            /*if ( abShapeCheck(ml0.layer->abShape, &ml0.layer->posNext, &newPos) ) {
                 int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                 newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
                 increment = '0' + 1; //player one score
                 scorePoint(increment);
             }
-
-            if (shapeBoundary.botRight.axes[axis] > fence->botRight.axes[axis]) {
+*/
+            if (shapeBoundary.botRight.axes[axis] > ml->topLeft.axes[axis]) {
                  int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
                 newPos.axes[axis] += (2 * velocity);
                 hitBuzz();
